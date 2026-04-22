@@ -1,0 +1,138 @@
+---
+const links = [
+  { href: '#top',       label: 'Home' },
+  { href: '#services',  label: 'Services' },
+  { href: '#about',     label: 'About' },
+  { href: '#reviews',   label: 'Reviews' },
+  { href: '#how',       label: 'How It Works' },
+];
+---
+
+<!-- Trust bar -->
+<div class="bg-teal-900 text-white text-xs md:text-sm">
+  <div class="mx-auto max-w-7xl px-5 md:px-8 h-9 flex items-center justify-between gap-4">
+    <div class="flex items-center gap-2 truncate">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" class="text-brand-400 shrink-0" aria-hidden="true"><path d="M12 2l2.9 6.9L22 10l-5.5 4.8L18 22l-6-3.7L6 22l1.5-7.2L2 10l7.1-1.1L12 2z"/></svg>
+      <span class="truncate"><strong>4.9 stars</strong> · 156 Google reviews · Northern Virginia's Prius &amp; Hybrid Specialist</span>
+    </div>
+    <a href="tel:+17032619442" class="hidden sm:inline-flex items-center gap-1.5 font-semibold hover:text-brand-300 transition-colors">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.37 1.9.72 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.35 1.85.59 2.81.72A2 2 0 0 1 22 16.92Z"/></svg>
+      (703) 261-9442
+    </a>
+  </div>
+</div>
+
+<header
+  data-nav
+  class="sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b border-transparent transition-all duration-300 [&[data-scrolled]]:border-slate-200 [&[data-scrolled]]:shadow-sm"
+>
+  <div class="mx-auto max-w-7xl px-5 md:px-8">
+    <div class="flex h-20 py-3 items-center justify-between gap-6">
+      <!-- Brand -->
+      <a href="#top" class="flex items-center gap-3 group shrink-0">
+        <img
+          src="/images/logo.png"
+          alt="Triton Hybrid Battery Repair"
+          class="h-12 w-12 md:h-14 md:w-14 object-contain transition-transform duration-300 group-hover:scale-105"
+          width="56" height="56"
+        />
+        <span class="hidden sm:flex flex-col leading-tight">
+          <span class="font-extrabold text-base md:text-lg tracking-tight text-slate-900">Triton Hybrid</span>
+          <span class="text-[11px] md:text-xs font-semibold uppercase tracking-[0.18em] text-brand-600">Battery Repair</span>
+        </span>
+      </a>
+
+      <!-- Desktop links -->
+      <nav class="hidden lg:flex items-center gap-8">
+        {links.map((l) => (
+          <a
+            href={l.href}
+            class="text-sm font-medium text-slate-700 hover:text-brand-600 transition-colors duration-300"
+          >{l.label}</a>
+        ))}
+      </nav>
+
+      <!-- Right cluster -->
+      <div class="flex items-center gap-3 md:gap-4">
+        <a
+          href="tel:+17032619442"
+          class="hidden md:inline-flex items-center gap-2 text-sm font-semibold text-slate-900 hover:text-brand-600 transition-colors duration-300"
+        >
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.37 1.9.72 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.35 1.85.59 2.81.72A2 2 0 0 1 22 16.92Z"/></svg>
+          (703) 261-9442
+        </a>
+        <a
+          href="#hero-form"
+          class="hidden sm:inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-brand-600 hover:bg-brand-700 text-white text-sm font-semibold shadow-brand hover:-translate-y-0.5 transition-all duration-300"
+        >
+          Get a Free Quote
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+        </a>
+
+        <!-- Mobile hamburger -->
+        <button
+          type="button"
+          aria-label="Open menu"
+          aria-controls="mobile-menu"
+          aria-expanded="false"
+          data-menu-btn
+          class="lg:hidden w-10 h-10 inline-flex flex-col items-center justify-center gap-1.5 rounded-lg border border-slate-200 hover:border-brand-600 transition"
+        >
+          <span class="block w-4 h-0.5 bg-slate-900 transition-transform duration-300" data-bar-top></span>
+          <span class="block w-4 h-0.5 bg-slate-900 transition-transform duration-300" data-bar-bot></span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Mobile drawer -->
+  <div
+    id="mobile-menu"
+    data-menu
+    class="lg:hidden fixed inset-x-0 top-[6.25rem] bottom-0 bg-white translate-x-full transition-transform duration-500 ease-out z-40"
+  >
+    <nav class="flex flex-col px-5 py-8 gap-1">
+      {links.map((l) => (
+        <a
+          href={l.href}
+          data-menu-link
+          class="text-2xl font-semibold text-slate-900 py-4 border-b border-slate-100 hover:text-brand-600 transition-colors"
+        >{l.label}</a>
+      ))}
+      <a
+        href="#hero-form"
+        data-menu-link
+        class="mt-6 inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl bg-brand-600 hover:bg-brand-700 text-white text-base font-semibold shadow-lg transition-all"
+      >
+        Get a Free Quote
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+      </a>
+      <a href="tel:+17032619442" class="mt-4 text-sm text-slate-500">Or call — (703) 261-9442</a>
+    </nav>
+  </div>
+</header>
+
+<script>
+  const btn  = document.querySelector<HTMLButtonElement>('[data-menu-btn]');
+  const menu = document.querySelector<HTMLElement>('[data-menu]');
+  const top  = document.querySelector<HTMLElement>('[data-bar-top]');
+  const bot  = document.querySelector<HTMLElement>('[data-bar-bot]');
+
+  const toggle = (open: boolean) => {
+    if (!menu || !btn) return;
+    btn.setAttribute('aria-expanded', String(open));
+    menu.style.transform = open ? 'translateX(0)' : 'translateX(100%)';
+    if (top) top.style.transform = open ? 'translateY(3px) rotate(45deg)' : '';
+    if (bot) bot.style.transform = open ? 'translateY(-3px) rotate(-45deg)' : '';
+    document.body.style.overflow = open ? 'hidden' : '';
+  };
+
+  btn?.addEventListener('click', () => {
+    const open = btn.getAttribute('aria-expanded') !== 'true';
+    toggle(open);
+  });
+
+  document.querySelectorAll('[data-menu-link]').forEach((l) =>
+    l.addEventListener('click', () => toggle(false))
+  );
+</script>

@@ -1,0 +1,166 @@
+---
+const reviews = [
+  {
+    quote: "After being quoted over $11,000 by the dealership, they replaced my hybrid battery with a used pack for a fraction of the cost. Sal was knowledgeable, honest, and took the time to explain everything. Hard to find a shop that specializes in hybrids and actually makes you feel confident in the work — they definitely did.",
+    name: 'B. H.',
+    vehicle: 'Hybrid Battery Replacement',
+    badge: 'Saved $10,000+ vs dealer',
+  },
+  {
+    quote: "I found Triton on Next Door and was I glad I did. He is truly the Prius Whisperer. I have used him twice and he is excellent. My car came out running beautifully. He is honest and efficient. I would recommend him to anyone and I drive over 30 miles to use him. I wouldn't take my car to anyone else.",
+    name: 'Judy Kelly',
+    vehicle: 'Repeat Prius Customer',
+    badge: '"The Prius Whisperer"',
+  },
+  {
+    quote: "Sal is a commensurate professional. He made short work of what we thought would be a long and expensive repair and had my daughter's Prius running within an hour for a great price — I'd give him 10 stars if I could! He knows Priuses inside and out and goes the extra mile for his customers.",
+    name: 'J. Osman',
+    vehicle: '2004 Toyota Prius',
+    badge: 'Same-day fix',
+  },
+  {
+    quote: "Sal was able to read the codes and diagnose a bad HV battery and other issues. He advised that if there were no sentimental reasons to keep the old Prius I should not put anymore money on it. Many mechanics would try to do the repairs anyway and make money. Very honest shop. Highly recommended.",
+    name: 'Nick',
+    vehicle: 'Older Prius',
+    badge: 'Honest to a fault',
+  },
+  {
+    quote: "Sal drives laps around every other mechanic/dealership I've taken my Prius to. He had a family emergency but still followed up, successfully diagnosed the issue, and FaceTimed me from home to confirm it. That's the kind of guy you keep around.",
+    name: 'Deedar',
+    vehicle: 'Toyota Prius',
+    badge: 'Diagnostics',
+  },
+  {
+    quote: "Sal is the GOAT of Prius mechanics. My 15 y/o Prius is still running strong thanks to him.",
+    name: 'Mark Owolabi',
+    vehicle: '15-year-old Prius',
+    badge: 'Still running strong',
+  },
+  {
+    quote: "Sal is a rockstar. I bought a new-to-me Toyota Highlander Hybrid and wanted it checked out. He did an entire inspection, including the health of the hybrid battery, and walked me around the car explaining everything. Not once did he make me feel stupid for asking questions. It's a 30-minute drive and he's easily earned a repeat customer.",
+    name: 'Zoe Philippides',
+    vehicle: 'Toyota Highlander Hybrid',
+    badge: 'Drives 30 min to visit',
+  },
+  {
+    quote: "There's not enough great things to say about Sal. He does honest, straightforward, and excellent quality work at a fair price. He took the time to explain things, fixed the problems, and taught me things about my car that I didn't know. I'll take my car back to him in a heartbeat.",
+    name: 'Levi Adelman',
+    vehicle: '2007 Prius',
+    badge: 'Fair pricing',
+  },
+  {
+    quote: "Best in the game! Especially if you own a Prius — Sal knows these cars inside and out. I was able to drive away confidently when NOBODY else, not even Toyota, could tell me the problem. Great guy and my go-to since using his services.",
+    name: 'Erez Avissar',
+    vehicle: 'Toyota Prius',
+    badge: 'Solved what Toyota couldn\'t',
+  },
+];
+
+const highlights = [
+  { icon: `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>`, label: 'Honesty' },
+  { icon: `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L3 7v5c0 5 4 9 9 10 5-1 9-5 9-10V7l-9-5z"/></svg>`, label: 'Expertise' },
+  { icon: `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>`, label: 'Save Thousands' },
+  { icon: `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>`, label: 'Transparency' },
+];
+---
+
+<section id="reviews" class="py-20 md:py-28 bg-white">
+  <div class="mx-auto max-w-7xl px-5 md:px-8">
+    <!-- Header with aggregate rating -->
+    <div class="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-8 reveal">
+      <div class="max-w-2xl">
+        <span class="text-xs font-bold tracking-[0.2em] uppercase text-brand-600">Reviews</span>
+        <h2 class="mt-3 text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-slate-900 leading-tight">
+          4.9 stars. 156 Google reviews. <br class="hidden sm:inline" />
+          <span class="text-brand-600">Zero surprises.</span>
+        </h2>
+        <p class="mt-4 text-lg text-slate-600">
+          Our customers talk about the same things over and over: honesty, expertise,
+          saving thousands, and genuine transparency. Read for yourself.
+        </p>
+      </div>
+
+      <!-- Big rating card -->
+      <div class="shrink-0 bg-white ring-1 ring-slate-900/10 rounded-2xl p-5 md:p-6 shadow-lg flex items-center gap-5">
+        <div class="text-center">
+          <div class="text-5xl font-extrabold text-slate-900 leading-none">4.9</div>
+          <div class="mt-1.5 flex gap-0.5 text-brand-600 justify-center">
+            {Array.from({ length: 5 }).map(() => (
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.9 6.9L22 10l-5.5 4.8L18 22l-6-3.7L6 22l1.5-7.2L2 10l7.1-1.1L12 2z"/></svg>
+            ))}
+          </div>
+        </div>
+        <div class="h-14 w-px bg-slate-200"></div>
+        <div>
+          <div class="flex items-center gap-2">
+            <!-- Google 'G' -->
+            <svg width="22" height="22" viewBox="0 0 48 48" aria-hidden="true">
+              <path fill="#FFC107" d="M43.6 20.5H42V20H24v8h11.3C33.9 32.7 29.4 36 24 36c-6.6 0-12-5.4-12-12s5.4-12 12-12c3 0 5.8 1.1 7.9 3l5.7-5.7C34 6.1 29.3 4 24 4 12.9 4 4 12.9 4 24s8.9 20 20 20 20-8.9 20-20c0-1.2-.1-2.3-.4-3.5z"/>
+              <path fill="#FF3D00" d="M6.3 14.7l6.6 4.8C14.7 16 19 13 24 13c3 0 5.8 1.1 7.9 3l5.7-5.7C34 6.1 29.3 4 24 4 16.3 4 9.7 8.3 6.3 14.7z"/>
+              <path fill="#4CAF50" d="M24 44c5.2 0 9.9-2 13.4-5.2l-6.2-5.2C29.3 35 26.8 36 24 36c-5.4 0-9.9-3.3-11.3-7.9l-6.5 5C9.6 39.6 16.2 44 24 44z"/>
+              <path fill="#1976D2" d="M43.6 20.5H42V20H24v8h11.3c-.7 2.1-2 3.9-3.8 5.1l6.2 5.2C41.9 35.7 44 30.3 44 24c0-1.2-.1-2.3-.4-3.5z"/>
+            </svg>
+            <div class="font-bold text-slate-900">Google Reviews</div>
+          </div>
+          <div class="text-sm text-slate-500">Based on <strong>156</strong> verified reviews</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Highlight chips -->
+    <div class="mt-8 flex flex-wrap gap-3 reveal">
+      {highlights.map((h) => (
+        <span class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-brand-50 text-brand-700 ring-1 ring-brand-200 text-sm font-semibold">
+          <span class="text-brand-600"><Fragment set:html={h.icon} /></span>
+          {h.label}
+        </span>
+      ))}
+    </div>
+
+    <!-- Review grid -->
+    <div class="mt-10 md:mt-14 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      {reviews.map((r, i) => (
+        <figure
+          class="bg-slate-50 rounded-2xl p-6 md:p-7 ring-1 ring-slate-900/5 hover:shadow-xl transition-shadow duration-300 reveal flex flex-col"
+          style={`transition-delay: ${i * 60}ms;`}
+        >
+          <div class="flex items-center justify-between">
+            <div class="flex gap-0.5 text-brand-600">
+              {Array.from({ length: 5 }).map(() => (
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.9 6.9L22 10l-5.5 4.8L18 22l-6-3.7L6 22l1.5-7.2L2 10l7.1-1.1L12 2z"/></svg>
+              ))}
+            </div>
+            <svg width="20" height="20" viewBox="0 0 48 48" aria-hidden="true" class="opacity-90">
+              <path fill="#FFC107" d="M43.6 20.5H42V20H24v8h11.3C33.9 32.7 29.4 36 24 36c-6.6 0-12-5.4-12-12s5.4-12 12-12c3 0 5.8 1.1 7.9 3l5.7-5.7C34 6.1 29.3 4 24 4 12.9 4 4 12.9 4 24s8.9 20 20 20 20-8.9 20-20c0-1.2-.1-2.3-.4-3.5z"/>
+              <path fill="#FF3D00" d="M6.3 14.7l6.6 4.8C14.7 16 19 13 24 13c3 0 5.8 1.1 7.9 3l5.7-5.7C34 6.1 29.3 4 24 4 16.3 4 9.7 8.3 6.3 14.7z"/>
+              <path fill="#4CAF50" d="M24 44c5.2 0 9.9-2 13.4-5.2l-6.2-5.2C29.3 35 26.8 36 24 36c-5.4 0-9.9-3.3-11.3-7.9l-6.5 5C9.6 39.6 16.2 44 24 44z"/>
+              <path fill="#1976D2" d="M43.6 20.5H42V20H24v8h11.3c-.7 2.1-2 3.9-3.8 5.1l6.2 5.2C41.9 35.7 44 30.3 44 24c0-1.2-.1-2.3-.4-3.5z"/>
+            </svg>
+          </div>
+          {r.badge && (
+            <div class="mt-4 inline-flex self-start items-center gap-1.5 px-2.5 py-1 rounded-full bg-brand-50 text-brand-700 ring-1 ring-brand-200 text-[11px] font-bold uppercase tracking-wider">
+              <svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.9 6.9L22 10l-5.5 4.8L18 22l-6-3.7L6 22l1.5-7.2L2 10l7.1-1.1L12 2z"/></svg>
+              {r.badge}
+            </div>
+          )}
+          <blockquote class="mt-4 text-slate-800 leading-relaxed flex-1">"{r.quote}"</blockquote>
+          <figcaption class="mt-5 pt-5 border-t border-slate-200">
+            <div class="font-bold text-slate-900">{r.name}</div>
+            <div class="text-xs text-slate-500">{r.vehicle}</div>
+          </figcaption>
+        </figure>
+      ))}
+    </div>
+
+    <!-- CTA -->
+    <div class="mt-12 text-center reveal">
+      <a
+        href="#hero-form"
+        class="inline-flex items-center gap-2 px-7 py-4 rounded-xl bg-brand-600 hover:bg-brand-700 text-white font-semibold shadow-brand hover:-translate-y-0.5 transition-all duration-300"
+      >
+        Join 150+ Happy Hybrid Owners
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+      </a>
+    </div>
+  </div>
+</section>
