@@ -1,23 +1,10 @@
 ---
+import QuoteForm from './QuoteForm.astro';
+
 const features = [
   'Save thousands vs dealership',
   'Honest, transparent diagnostics',
   'Premium warranty on every repair',
-];
-
-const makes = [
-  'Toyota Prius',
-  'Toyota Prius Prime',
-  'Toyota Camry Hybrid',
-  'Toyota Highlander Hybrid',
-  'Lexus RX / ES Hybrid',
-  'Honda Civic Hybrid',
-  'Honda Insight',
-  'Honda Accord Hybrid',
-  'Ford Fusion Hybrid',
-  'Hyundai Ioniq',
-  'Kia Niro Hybrid',
-  'Other / Not listed',
 ];
 ---
 
@@ -120,99 +107,7 @@ const makes = [
 
       <!-- RIGHT: floating booking form -->
       <div class="lg:col-span-5 reveal" style="transition-delay: 120ms;">
-        <form
-          id="hero-form"
-          class="relative bg-white rounded-2xl shadow-2xl ring-1 ring-slate-900/5 p-6 sm:p-8 lg:p-9"
-          onsubmit="event.preventDefault(); this.querySelector('[data-success]').classList.remove('hidden'); this.reset();"
-        >
-          <div class="absolute -top-3 left-6 inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-brand-600 text-white text-[11px] font-semibold tracking-wider uppercase shadow-md">
-            Free · No-Obligation
-          </div>
-
-          <h2 class="text-2xl sm:text-3xl font-bold text-slate-900">Get Your Honest Quote</h2>
-          <p class="mt-2 text-slate-500">
-            Tell us about your hybrid — we'll respond within one business hour.
-          </p>
-
-          <div class="mt-6 space-y-4">
-            <div>
-              <label for="name" class="block text-xs font-semibold uppercase tracking-wide text-slate-500 mb-1.5">Full Name</label>
-              <input
-                id="name"
-                name="name"
-                type="text"
-                required
-                placeholder="Jane Doe"
-                class="w-full px-4 py-3 rounded-xl border border-slate-200 bg-slate-50 text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-brand-600 focus:border-transparent focus:bg-white transition-all duration-300"
-              />
-            </div>
-
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <div>
-                <label for="email" class="block text-xs font-semibold uppercase tracking-wide text-slate-500 mb-1.5">Email</label>
-                <input
-                  id="email"
-                  name="email"
-                  type="email"
-                  required
-                  placeholder="jane@example.com"
-                  class="w-full px-4 py-3 rounded-xl border border-slate-200 bg-slate-50 text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-brand-600 focus:border-transparent focus:bg-white transition-all duration-300"
-                />
-              </div>
-              <div>
-                <label for="phone" class="block text-xs font-semibold uppercase tracking-wide text-slate-500 mb-1.5">Phone</label>
-                <input
-                  id="phone"
-                  name="phone"
-                  type="tel"
-                  required
-                  placeholder="(703) 555-0100"
-                  class="w-full px-4 py-3 rounded-xl border border-slate-200 bg-slate-50 text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-brand-600 focus:border-transparent focus:bg-white transition-all duration-300"
-                />
-              </div>
-            </div>
-
-            <div>
-              <label for="vehicle" class="block text-xs font-semibold uppercase tracking-wide text-slate-500 mb-1.5">Vehicle Make / Model</label>
-              <select
-                id="vehicle"
-                name="vehicle"
-                required
-                class="w-full px-4 py-3 rounded-xl border border-slate-200 bg-slate-50 text-slate-900 focus:outline-none focus:ring-2 focus:ring-brand-600 focus:border-transparent focus:bg-white transition-all duration-300 appearance-none bg-[url('data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%2212%22 height=%2212%22 viewBox=%220 0 24 24%22 fill=%22none%22 stroke=%22%2364748b%22 stroke-width=%222.5%22><polyline points=%226 9 12 15 18 9%22/></svg>')] bg-no-repeat bg-[right_1rem_center] pr-10"
-              >
-                <option value="" disabled selected>Select your hybrid...</option>
-                {makes.map((m) => <option value={m}>{m}</option>)}
-              </select>
-            </div>
-
-            <div>
-              <label for="issue" class="block text-xs font-semibold uppercase tracking-wide text-slate-500 mb-1.5">What's going on?</label>
-              <textarea
-                id="issue"
-                name="issue"
-                rows="3"
-                placeholder="Warning lights, reduced MPG, battery warning, dealership quote, etc."
-                class="w-full px-4 py-3 rounded-xl border border-slate-200 bg-slate-50 text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-brand-600 focus:border-transparent focus:bg-white transition-all duration-300 resize-none"
-              ></textarea>
-            </div>
-          </div>
-
-          <button
-            type="submit"
-            class="mt-6 w-full inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl bg-brand-600 hover:bg-brand-700 text-white font-semibold shadow-brand hover:-translate-y-0.5 transition-all duration-300"
-          >
-            Request Free Quote
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
-          </button>
-
-          <p class="mt-4 text-center text-xs text-slate-400">
-            Prefer to talk? Call <a href="tel:+17032619442" class="font-semibold text-slate-700 hover:text-brand-600">(703) 261-9442</a>
-          </p>
-
-          <div data-success class="hidden mt-4 rounded-xl bg-brand-50 border border-brand-200 p-3 text-sm text-brand-800">
-            Thanks! We'll reach out within one business hour with your honest quote.
-          </div>
-        </form>
+        <QuoteForm />
       </div>
     </div>
   </div>

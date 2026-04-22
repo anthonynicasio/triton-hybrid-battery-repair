@@ -1,0 +1,430 @@
+---
+/**
+ * QuoteForm — multi-step intake flow.
+ *
+ * Tech: pure Astro + Tailwind + vanilla JS. Zero new dependencies.
+ * Transitions match Framer Motion style (fade + subtle lift) via CSS.
+ *
+ * How to wire up submissions:
+ *   1. Create a Formspree form at https://formspree.io
+ *   2. Paste the endpoint below (looks like https://formspree.io/f/abcdwxyz)
+ *
+ * Later integrations (Airtable, HubSpot, Calendly, CRM) can be added
+ * by intercepting the fetch() in the submit handler below — no UI changes needed.
+ */
+const FORM_ENDPOINT = 'https://formspree.io/f/your-form-id';
+
+const issues = [
+  { id: 'hybrid-battery-warning', label: 'Hybrid battery warning', icon: `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="16" height="10" rx="2"/><rect x="18" y="10" width="4" height="4" rx="1"/><path d="M6 12h2M10 12h2"/></svg>` },
+  { id: 'poor-fuel-economy',      label: 'Poor fuel economy',       icon: `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 22V7a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v15"/><path d="M3 11h12"/><path d="M15 8h3l3 3v8a2 2 0 0 1-2 2h-1"/></svg>` },
+  { id: 'wont-start',             label: "Car won't start",          icon: `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8 12h3l1-3 2 6 1-3h2"/></svg>` },
+  { id: 'loss-of-power',          label: 'Loss of power',            icon: `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>` },
+  { id: 'brake-abs',              label: 'Brake / ABS warning',      icon: `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8 12h8"/></svg>` },
+  { id: 'check-engine',           label: 'Check engine light',       icon: `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M10 2h4v4l4 2v3h3v7h-3v4H6v-4H3v-7h3V8l4-2z"/></svg>` },
+  { id: 'other',                  label: 'Something else',           icon: `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M9.5 9a2.5 2.5 0 1 1 3.5 2.3c-.8.4-1 .9-1 1.7"/><line x1="12" y1="17" x2="12" y2="17.01"/></svg>` },
+];
+
+const makes = [
+  'Toyota','Lexus','Honda','Ford','Hyundai','Kia','Nissan','Chevrolet','Other',
+];
+
+const stepTitles = [
+  'Your contact info',
+  'About your vehicle',
+  "What's going on?",
+  'A few more details',
+  'Thanks — we got it!',
+];
+---
+
+<form
+  id="hero-form"
+  data-quote-form
+  data-current-step="1"
+  data-endpoint={FORM_ENDPOINT}
+  class="relative bg-white rounded-2xl shadow-2xl ring-1 ring-slate-900/5 p-6 sm:p-8 lg:p-9"
+  novalidate
+>
+  <div class="absolute -top-3 left-6 inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-brand-600 text-white text-[11px] font-semibold tracking-wider uppercase shadow-md">
+    Free · No-Obligation
+  </div>
+
+  <!-- Header: title + step indicator -->
+  <div class="flex items-start justify-between gap-4">
+    <div>
+      <h2 class="text-2xl sm:text-3xl font-bold text-slate-900" data-step-title>Get Your Honest Quote</h2>
+      <p class="mt-2 text-slate-500 text-sm" data-step-subtitle>Takes under a minute — no obligation.</p>
+    </div>
+    <div class="shrink-0 text-right">
+      <div class="text-xs font-semibold uppercase tracking-wider text-brand-600" data-step-counter>Step 1 of 4</div>
+      <div class="mt-1.5 text-[11px] text-slate-400">4.9★ · 156 reviews</div>
+    </div>
+  </div>
+
+  <!-- Progress bar -->
+  <div class="mt-5 h-1.5 w-full rounded-full bg-slate-100 overflow-hidden">
+    <div
+      data-progress-bar
+      class="h-full bg-brand-600 transition-[width] duration-500 ease-out"
+      style="width: 25%;"
+    ></div>
+  </div>
+
+  <!-- Steps wrapper -->
+  <div class="relative mt-7">
+    <!-- STEP 1: contact -->
+    <section
+      data-step-panel="1"
+      class="space-y-4 transition-all duration-300 ease-out"
+    >
+      <div>
+        <label for="qf-name" class="block text-xs font-semibold uppercase tracking-wide text-slate-500 mb-1.5">Full name</label>
+        <input id="qf-name" name="name" type="text" required placeholder="Jane Doe"
+          class="w-full px-4 py-3 rounded-xl border border-slate-200 bg-slate-50 text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-brand-600 focus:border-transparent focus:bg-white transition-all duration-300" />
+      </div>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div>
+          <label for="qf-phone" class="block text-xs font-semibold uppercase tracking-wide text-slate-500 mb-1.5">Phone</label>
+          <input id="qf-phone" name="phone" type="tel" required placeholder="(703) 555-0100"
+            class="w-full px-4 py-3 rounded-xl border border-slate-200 bg-slate-50 text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-brand-600 focus:border-transparent focus:bg-white transition-all duration-300" />
+        </div>
+        <div>
+          <label for="qf-email" class="block text-xs font-semibold uppercase tracking-wide text-slate-500 mb-1.5">Email</label>
+          <input id="qf-email" name="email" type="email" required placeholder="jane@example.com"
+            class="w-full px-4 py-3 rounded-xl border border-slate-200 bg-slate-50 text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-brand-600 focus:border-transparent focus:bg-white transition-all duration-300" />
+        </div>
+      </div>
+      <p class="text-xs text-slate-400 pt-1">Your info stays with us — we don't share it. Ever.</p>
+    </section>
+
+    <!-- STEP 2: vehicle -->
+    <section
+      data-step-panel="2"
+      class="space-y-4 transition-all duration-300 ease-out"
+      hidden
+    >
+      <div class="grid grid-cols-2 gap-4">
+        <div>
+          <label for="qf-year" class="block text-xs font-semibold uppercase tracking-wide text-slate-500 mb-1.5">Year</label>
+          <input id="qf-year" name="year" type="number" inputmode="numeric" min="1997" max="2030" required placeholder="2013"
+            class="w-full px-4 py-3 rounded-xl border border-slate-200 bg-slate-50 text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-brand-600 focus:border-transparent focus:bg-white transition-all duration-300" />
+        </div>
+        <div>
+          <label for="qf-make" class="block text-xs font-semibold uppercase tracking-wide text-slate-500 mb-1.5">Make</label>
+          <select id="qf-make" name="make" required
+            class="w-full px-4 py-3 rounded-xl border border-slate-200 bg-slate-50 text-slate-900 focus:outline-none focus:ring-2 focus:ring-brand-600 focus:border-transparent focus:bg-white transition-all duration-300 appearance-none bg-[url('data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%2212%22 height=%2212%22 viewBox=%220 0 24 24%22 fill=%22none%22 stroke=%22%2364748b%22 stroke-width=%222.5%22><polyline points=%226 9 12 15 18 9%22/></svg>')] bg-no-repeat bg-[right_1rem_center] pr-10">
+            <option value="" disabled selected>Select...</option>
+            {makes.map((m) => <option value={m}>{m}</option>)}
+          </select>
+        </div>
+      </div>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div>
+          <label for="qf-model" class="block text-xs font-semibold uppercase tracking-wide text-slate-500 mb-1.5">Model</label>
+          <input id="qf-model" name="model" type="text" required placeholder="Prius"
+            class="w-full px-4 py-3 rounded-xl border border-slate-200 bg-slate-50 text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-brand-600 focus:border-transparent focus:bg-white transition-all duration-300" />
+        </div>
+        <div>
+          <label for="qf-mileage" class="block text-xs font-semibold uppercase tracking-wide text-slate-500 mb-1.5">Mileage</label>
+          <input id="qf-mileage" name="mileage" type="number" inputmode="numeric" min="0" placeholder="120,000"
+            class="w-full px-4 py-3 rounded-xl border border-slate-200 bg-slate-50 text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-brand-600 focus:border-transparent focus:bg-white transition-all duration-300" />
+        </div>
+      </div>
+      <p class="text-xs text-slate-400 pt-1">Approximate mileage is fine — it helps us scope the right repair.</p>
+    </section>
+
+    <!-- STEP 3: issue cards (multi-select) -->
+    <section
+      data-step-panel="3"
+      class="transition-all duration-300 ease-out"
+      hidden
+    >
+      <p class="text-sm text-slate-500 mb-4">Select all that apply. We'll use this to prep the right diagnostic.</p>
+      <div class="grid grid-cols-2 gap-3">
+        {issues.map((it) => (
+          <label
+            data-issue-card
+            class="group relative flex items-start gap-3 p-3.5 rounded-xl border border-slate-200 bg-slate-50 hover:bg-white hover:border-brand-300 cursor-pointer transition-all duration-200 has-[:checked]:bg-brand-50 has-[:checked]:border-brand-500 has-[:checked]:ring-2 has-[:checked]:ring-brand-500/30"
+          >
+            <input type="checkbox" name="issues" value={it.label} class="sr-only peer" />
+            <span class="shrink-0 inline-flex items-center justify-center w-9 h-9 rounded-lg bg-white text-slate-600 ring-1 ring-slate-200 group-hover:text-brand-600 peer-checked:bg-brand-600 peer-checked:text-white peer-checked:ring-brand-600 transition-colors duration-200">
+              <Fragment set:html={it.icon} />
+            </span>
+            <span class="flex-1 text-sm font-semibold text-slate-800 leading-snug pt-1.5">{it.label}</span>
+            <svg class="absolute top-2.5 right-2.5 w-4 h-4 text-brand-600 opacity-0 peer-checked:opacity-100 transition-opacity duration-200" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+          </label>
+        ))}
+      </div>
+      <p data-issues-error class="hidden mt-3 text-xs text-red-600 font-medium">Please pick at least one option so we can help.</p>
+    </section>
+
+    <!-- STEP 4: details + files -->
+    <section
+      data-step-panel="4"
+      class="space-y-4 transition-all duration-300 ease-out"
+      hidden
+    >
+      <div>
+        <label for="qf-notes" class="block text-xs font-semibold uppercase tracking-wide text-slate-500 mb-1.5">Tell us what's going on</label>
+        <textarea id="qf-notes" name="notes" rows="4" placeholder="Warning lights, recent repairs, any dealership quote you've already received..."
+          class="w-full px-4 py-3 rounded-xl border border-slate-200 bg-slate-50 text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-brand-600 focus:border-transparent focus:bg-white transition-all duration-300 resize-none"></textarea>
+      </div>
+
+      <div>
+        <label class="block text-xs font-semibold uppercase tracking-wide text-slate-500 mb-1.5">Photos <span class="text-slate-400 normal-case font-normal">(optional)</span></label>
+        <label for="qf-files" class="flex items-center justify-center gap-3 px-4 py-5 rounded-xl border-2 border-dashed border-slate-200 hover:border-brand-400 bg-slate-50 hover:bg-brand-50/40 text-slate-500 hover:text-brand-700 cursor-pointer transition-all duration-200">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+          <span class="text-sm font-medium"><span data-file-label>Dashboard lights, code scans, estimates</span></span>
+        </label>
+        <input id="qf-files" name="attachments" type="file" accept="image/*,.pdf" multiple class="sr-only" data-file-input />
+        <ul data-file-list class="mt-2 space-y-1.5 hidden"></ul>
+        <p class="text-xs text-slate-400 mt-2">Helps Sal prep the right diagnosis before you arrive.</p>
+      </div>
+    </section>
+
+    <!-- STEP 5: success -->
+    <section
+      data-step-panel="5"
+      class="text-center py-6 transition-all duration-300 ease-out"
+      hidden
+    >
+      <div class="inline-flex items-center justify-center w-14 h-14 rounded-full bg-brand-50 text-brand-600 ring-4 ring-brand-100 mx-auto">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+      </div>
+      <h3 class="mt-5 text-xl font-bold text-slate-900">Your request is on its way.</h3>
+      <p class="mt-2 text-slate-500 max-w-sm mx-auto leading-relaxed">
+        Sal will personally review your details and reach out with an honest quote —
+        usually within one business hour.
+      </p>
+      <div class="mt-5 inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-brand-50 text-brand-700 ring-1 ring-brand-200 text-xs font-semibold">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.9 6.9L22 10l-5.5 4.8L18 22l-6-3.7L6 22l1.5-7.2L2 10l7.1-1.1L12 2z"/></svg>
+        Trusted by 156+ reviews on Google · 4.9 stars
+      </div>
+      <div class="mt-6">
+        <a href="tel:+17032619442" class="text-sm font-semibold text-slate-700 hover:text-brand-600 transition-colors">
+          Need help right now? Call (703) 261-9442
+        </a>
+      </div>
+    </section>
+  </div>
+
+  <!-- Nav buttons -->
+  <div class="mt-7 flex items-center gap-3" data-step-nav>
+    <button
+      type="button"
+      data-back
+      class="hidden sm:inline-flex items-center gap-1.5 px-5 py-3 rounded-xl bg-white text-slate-700 font-semibold ring-1 ring-slate-200 hover:ring-slate-300 hover:-translate-y-0.5 transition-all duration-300"
+    >
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+      Back
+    </button>
+    <button
+      type="button"
+      data-next
+      class="flex-1 inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl bg-brand-600 hover:bg-brand-700 text-white font-semibold shadow-brand hover:-translate-y-0.5 transition-all duration-300"
+    >
+      <span data-next-label>Next</span>
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+    </button>
+  </div>
+
+  <p class="mt-4 text-center text-xs text-slate-400" data-helper-text>
+    Prefer to talk? Call <a href="tel:+17032619442" class="font-semibold text-slate-700 hover:text-brand-600">(703) 261-9442</a>
+  </p>
+
+  <!-- Submission error -->
+  <div data-form-error class="hidden mt-4 rounded-xl bg-red-50 border border-red-200 p-3 text-sm text-red-700">
+    Something went wrong sending your request. Please call <a href="tel:+17032619442" class="font-bold underline">(703) 261-9442</a> or email <a href="mailto:tritonhybridbattery@gmail.com" class="font-bold underline">tritonhybridbattery@gmail.com</a>.
+  </div>
+</form>
+
+<script>
+  type StepIndex = 1 | 2 | 3 | 4 | 5;
+  const TOTAL_INPUT_STEPS = 4;
+
+  const form = document.querySelector<HTMLFormElement>('[data-quote-form]');
+  if (form) {
+    const endpoint = form.dataset.endpoint || '';
+    const panels = Array.from(form.querySelectorAll<HTMLElement>('[data-step-panel]'));
+    const bar = form.querySelector<HTMLElement>('[data-progress-bar]');
+    const title = form.querySelector<HTMLElement>('[data-step-title]');
+    const subtitle = form.querySelector<HTMLElement>('[data-step-subtitle]');
+    const counter = form.querySelector<HTMLElement>('[data-step-counter]');
+    const backBtn = form.querySelector<HTMLButtonElement>('[data-back]');
+    const nextBtn = form.querySelector<HTMLButtonElement>('[data-next]');
+    const nextLabel = form.querySelector<HTMLElement>('[data-next-label]');
+    const stepNav = form.querySelector<HTMLElement>('[data-step-nav]');
+    const helperText = form.querySelector<HTMLElement>('[data-helper-text]');
+    const errorBox = form.querySelector<HTMLElement>('[data-form-error]');
+    const issuesError = form.querySelector<HTMLElement>('[data-issues-error]');
+    const fileInput = form.querySelector<HTMLInputElement>('[data-file-input]');
+    const fileList = form.querySelector<HTMLUListElement>('[data-file-list]');
+    const fileLabel = form.querySelector<HTMLElement>('[data-file-label]');
+
+    const titles = [
+      { h: 'Get Your Honest Quote', s: 'Takes under a minute — no obligation.' },
+      { h: 'About your vehicle',    s: 'Year, make, model — so we can prep the right parts.' },
+      { h: "What's going on?",      s: 'Pick everything that applies. It all helps.' },
+      { h: 'Any details to add?',   s: 'Share photos of warnings or existing estimates if you have them.' },
+      { h: 'Thanks — request sent.', s: "We'll review it and reach out with an honest quote." },
+    ];
+
+    let current: StepIndex = 1;
+    let submitting = false;
+
+    const setPanelVisibility = (active: StepIndex) => {
+      panels.forEach((p) => {
+        const idx = Number(p.dataset.stepPanel);
+        if (idx === active) {
+          p.hidden = false;
+          p.classList.add('opacity-0', 'translate-y-2');
+          requestAnimationFrame(() => {
+            p.classList.remove('opacity-0', 'translate-y-2');
+          });
+        } else {
+          p.hidden = true;
+          p.classList.remove('opacity-0', 'translate-y-2');
+        }
+      });
+    };
+
+    const render = () => {
+      const pct = current <= TOTAL_INPUT_STEPS
+        ? (current / TOTAL_INPUT_STEPS) * 100
+        : 100;
+      if (bar) bar.style.width = pct + '%';
+
+      const t = titles[current - 1];
+      if (title) title.textContent = t.h;
+      if (subtitle) subtitle.textContent = t.s;
+      if (counter) counter.textContent = current <= TOTAL_INPUT_STEPS
+        ? `Step ${current} of ${TOTAL_INPUT_STEPS}`
+        : 'Complete';
+
+      setPanelVisibility(current);
+
+      if (backBtn) backBtn.style.visibility = (current > 1 && current <= TOTAL_INPUT_STEPS) ? 'visible' : 'hidden';
+      if (nextLabel) {
+        nextLabel.textContent = current === TOTAL_INPUT_STEPS ? 'Send My Request' : 'Next';
+      }
+
+      if (stepNav) stepNav.style.display = current === 5 ? 'none' : 'flex';
+      if (helperText) helperText.style.display = current === 5 ? 'none' : 'block';
+    };
+
+    const validateStep = (): boolean => {
+      const panel = panels.find((p) => Number(p.dataset.stepPanel) === current);
+      if (!panel) return true;
+
+      if (current === 3) {
+        const checked = panel.querySelectorAll<HTMLInputElement>('input[name="issues"]:checked');
+        if (checked.length === 0) {
+          issuesError?.classList.remove('hidden');
+          return false;
+        }
+        issuesError?.classList.add('hidden');
+        return true;
+      }
+
+      const fields = Array.from(panel.querySelectorAll<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>('input, select, textarea'));
+      for (const f of fields) {
+        if (!f.checkValidity()) {
+          f.reportValidity();
+          return false;
+        }
+      }
+      return true;
+    };
+
+    const goTo = (next: StepIndex) => {
+      if (next === current) return;
+      current = next;
+      render();
+      // Keep form top in view on mobile when advancing.
+      if (window.innerWidth < 1024) {
+        form?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    };
+
+    const submit = async () => {
+      if (!endpoint || endpoint.includes('your-form-id')) {
+        // MVP fallback: if endpoint hasn't been configured yet, still show success
+        // so the flow can be demoed. Real submissions require Formspree setup.
+        console.warn('[QuoteForm] FORM_ENDPOINT not configured. Simulating success.');
+        goTo(5);
+        return;
+      }
+
+      submitting = true;
+      nextBtn?.setAttribute('disabled', 'true');
+      if (nextLabel) nextLabel.textContent = 'Sending...';
+      errorBox?.classList.add('hidden');
+
+      try {
+        const fd = new FormData(form);
+        // Formspree accepts multipart/form-data natively.
+        const res = await fetch(endpoint, {
+          method: 'POST',
+          body: fd,
+          headers: { Accept: 'application/json' },
+        });
+        if (!res.ok) throw new Error('Submission failed');
+        goTo(5);
+      } catch (err) {
+        console.error(err);
+        errorBox?.classList.remove('hidden');
+      } finally {
+        submitting = false;
+        nextBtn?.removeAttribute('disabled');
+        if (nextLabel && current !== 5) nextLabel.textContent = current === TOTAL_INPUT_STEPS ? 'Send My Request' : 'Next';
+      }
+    };
+
+    nextBtn?.addEventListener('click', () => {
+      if (submitting) return;
+      if (!validateStep()) return;
+      if (current < TOTAL_INPUT_STEPS) {
+        goTo((current + 1) as StepIndex);
+      } else {
+        submit();
+      }
+    });
+
+    backBtn?.addEventListener('click', () => {
+      if (current > 1) goTo((current - 1) as StepIndex);
+    });
+
+    // Enter key on non-textarea fields advances the step
+    form.addEventListener('keydown', (e) => {
+      const target = e.target as HTMLElement;
+      if (e.key === 'Enter' && target.tagName !== 'TEXTAREA' && current < 5) {
+        e.preventDefault();
+        nextBtn?.click();
+      }
+    });
+
+    // File input preview
+    fileInput?.addEventListener('change', () => {
+      if (!fileInput.files || !fileList) return;
+      fileList.innerHTML = '';
+      if (fileInput.files.length === 0) {
+        fileList.classList.add('hidden');
+        if (fileLabel) fileLabel.textContent = 'Dashboard lights, code scans, estimates';
+        return;
+      }
+      fileList.classList.remove('hidden');
+      if (fileLabel) fileLabel.textContent = `${fileInput.files.length} file${fileInput.files.length === 1 ? '' : 's'} attached`;
+      Array.from(fileInput.files).forEach((file) => {
+        const li = document.createElement('li');
+        li.className = 'flex items-center gap-2 text-xs text-slate-600 bg-slate-50 rounded-lg px-3 py-1.5';
+        li.innerHTML = `<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-brand-600 shrink-0"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg><span class="truncate">${file.name}</span>`;
+        fileList.appendChild(li);
+      });
+    });
+
+    // Prevent native submit (button is type="button")
+    form.addEventListener('submit', (e) => e.preventDefault());
+
+    render();
+  }
+</script>
