@@ -6,12 +6,16 @@ import Footer from '../components/Footer.astro';
 interface Props {
   title?: string;
   description?: string;
+  canonicalPath?: string;
 }
 
 const {
   title = "Triton Hybrid Battery Repair — Northern Virginia's Prius & Hybrid Specialist",
   description = 'Honest Hybrid Experts. Dealership Quality Without Dealership Prices. Specialist hybrid battery diagnostics, repair, and replacement. 4.9★ on Google, 156+ reviews.',
+  canonicalPath = Astro.url.pathname,
 } = Astro.props;
+
+const canonicalUrl = new URL(canonicalPath, Astro.site).toString();
 ---
 
 <!doctype html>
@@ -25,8 +29,10 @@ const {
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonicalUrl} />
     <meta property="og:image" content="/images/logo.png" />
     <meta name="twitter:card" content="summary_large_image" />
+    <link rel="canonical" href={canonicalUrl} />
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
