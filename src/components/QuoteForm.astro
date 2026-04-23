@@ -6,13 +6,13 @@
  * Transitions match Framer Motion style (fade + subtle lift) via CSS.
  *
  * How to wire up submissions:
- *   1. Create a Formspree form at https://formspree.io
- *   2. Paste the endpoint below (looks like https://formspree.io/f/abcdwxyz)
+ *   1. Deploy on Netlify with forms enabled
+ *   2. Submissions from this form appear in the Netlify Forms dashboard
  *
  * Later integrations (Airtable, HubSpot, Calendly, CRM) can be added
  * by intercepting the fetch() in the submit handler below — no UI changes needed.
  */
-const FORM_ENDPOINT = 'https://formspree.io/f/your-form-id';
+const FORM_NAME = 'quote-request';
 
 const issues = [
   { id: 'hybrid-battery-warning', label: 'Hybrid battery warning', icon: `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="16" height="10" rx="2"/><rect x="18" y="10" width="4" height="4" rx="1"/><path d="M6 12h2M10 12h2"/></svg>` },
@@ -39,12 +39,21 @@ const stepTitles = [
 
 <form
   id="hero-form"
+  name={FORM_NAME}
+  method="POST"
+  action="/"
+  data-netlify="true"
+  netlify-honeypot="bot-field"
+  enctype="multipart/form-data"
   data-quote-form
   data-current-step="1"
-  data-endpoint={FORM_ENDPOINT}
   class="relative bg-white rounded-2xl shadow-2xl ring-1 ring-slate-900/5 p-6 sm:p-8 lg:p-9"
   novalidate
 >
+  <input type="hidden" name="form-name" value={FORM_NAME} />
+  <p class="hidden">
+    <label>Do not fill this out if you're human: <input name="bot-field" /></label>
+  </p>
   <div class="absolute -top-3 left-6 inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-brand-600 text-white text-[11px] font-semibold tracking-wider uppercase shadow-md">
     Free · No-Obligation
   </div>
@@ -244,7 +253,7 @@ const stepTitles = [
 
   const form = document.querySelector<HTMLFormElement>('[data-quote-form]');
   if (form) {
-    const endpoint = form.dataset.endpoint || '';
+    const isLocalDev = ['localhost', '127.0.0.1'].includes(window.location.hostname);
     const panels = Array.from(form.querySelectorAll<HTMLElement>('[data-step-panel]'));
     const bar = form.querySelector<HTMLElement>('[data-progress-bar]');
     const title = form.querySelector<HTMLElement>('[data-step-title]');
@@ -347,13 +356,8 @@ const stepTitles = [
     };
 
     const submit = async () => {
-      if (!endpoint || endpoint.includes('your-form-id')) {
-        // MVP fallback: if endpoint hasn't been configured yet, still show success
-        // so the flow can be demoed. Real submissions require Formspree setup.
-        console.warn('[QuoteForm] FORM_ENDPOINT not configured. Simulating success.');
-        goTo(5);
-        return;
-      }
+      const formName = form.getAttribute('name') || '';
+      const submitPath = form.getAttribute('action') || '/';
 
       submitting = true;
       nextBtn?.setAttribute('disabled', 'true');
@@ -362,13 +366,22 @@ const stepTitles = [
 
       try {
         const fd = new FormData(form);
-        // Formspree accepts multipart/form-data natively.
-        const res = await fetch(endpoint, {
+        if (!formName) throw new Error('Missing form name');
+        fd.set('form-name', formName);
+
+        const res = await fetch(submitPath, {
           method: 'POST',
           body: fd,
           headers: { Accept: 'application/json' },
         });
-        if (!res.ok) throw new Error('Submission failed');
+        if (!res.ok) {
+          if (isLocalDev && (res.status === 404 || res.status === 405)) {
+            // Netlify form processing is only available in deployed Netlify envs.
+            goTo(5);
+            return;
+          }
+          throw new Error('Submission failed');
+        }
         goTo(5);
       } catch (err) {
         console.error(err);
