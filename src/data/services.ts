@@ -118,6 +118,17 @@ export const servicePages: ServicePage[] = [
   },
 ];
 
+const homepageServiceSlugs = [
+  'auto-engine-diagnostic',
+  'brake-repair',
+  'oil-changes',
+  'battery-unit',
+];
+
+export const homepageServicePages = homepageServiceSlugs
+  .map((slug) => servicePages.find((service) => service.slug === slug))
+  .filter((service): service is ServicePage => Boolean(service));
+
 export const topServicePages = servicePages.slice(0, 6);
 
 export const findServiceBySlug = (slug: string) =>
