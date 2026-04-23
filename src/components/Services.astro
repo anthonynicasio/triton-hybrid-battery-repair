@@ -1,7 +1,7 @@
 ---
 import { homepageServicePages } from '../data/services';
 
-const serviceImages = ['/images/mechanic-lamp.svg', '/images/mechanic-oil.svg', '/images/mechanic-wrench.svg'];
+const serviceImages = ['/images/mechanic-lamp.png', '/images/mechanic-oil.png', '/images/mechanic-wrench.png'];
 ---
 
 <section id="services" class="py-20 md:py-28 bg-slate-50">
@@ -28,7 +28,7 @@ const serviceImages = ['/images/mechanic-lamp.svg', '/images/mechanic-oil.svg', 
           <div class="relative aspect-[4/3] overflow-hidden bg-slate-100">
             <img
               src={serviceImages[i % serviceImages.length]}
-              alt={`${s.name} service illustration`}
+              alt={s.name}
               loading="lazy"
               decoding="async"
               class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 ease-out"

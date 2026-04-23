@@ -32,7 +32,7 @@ const links = [
       <!-- Brand -->
       <a href="/" class="flex items-center gap-3 group shrink-0">
         <img
-          src="/images/logo.svg"
+          src="/images/logo.png"
           alt="Triton Hybrid Battery Repair"
           class="h-12 w-12 md:h-14 md:w-14 object-contain transition-transform duration-300 group-hover:scale-105"
           width="56" height="56"
@@ -44,7 +44,7 @@ const links = [
       </a>
 
       <!-- Desktop links -->
-      <nav aria-label="Primary" class="hidden lg:flex items-center gap-8">
+      <nav class="hidden lg:flex items-center gap-8">
         {links.map((l) => (
           <a
             href={l.href}
@@ -76,7 +76,6 @@ const links = [
           aria-label="Open menu"
           aria-controls="mobile-menu"
           aria-expanded="false"
-          aria-haspopup="menu"
           data-menu-btn
           class="lg:hidden w-10 h-10 inline-flex flex-col items-center justify-center gap-1.5 rounded-lg border border-slate-200 hover:border-brand-600 transition"
         >
@@ -91,11 +90,9 @@ const links = [
   <div
     id="mobile-menu"
     data-menu
-    aria-label="Mobile navigation"
-    aria-hidden="true"
     class="lg:hidden fixed inset-x-0 top-[6.25rem] bottom-0 bg-white shadow-2xl translate-x-full transition-transform duration-500 ease-out z-40"
   >
-    <nav aria-label="Mobile primary" class="flex flex-col px-5 py-8 gap-1">
+    <nav class="flex flex-col px-5 py-8 gap-1">
       {links.map((l) => (
         <a
           href={l.href}
@@ -122,22 +119,10 @@ const links = [
   const nav = document.querySelector<HTMLElement>('[data-nav]');
   const top  = document.querySelector<HTMLElement>('[data-bar-top]');
   const bot  = document.querySelector<HTMLElement>('[data-bar-bot]');
-  let lastFocusedBeforeMenu: HTMLElement | null = null;
-
-  const getFocusable = () => {
-    if (!menu) return [];
-    return Array.from(
-      menu.querySelectorAll<HTMLElement>(
-        'a[href], button:not([disabled]), textarea, input, select, [tabindex]:not([tabindex="-1"])'
-      )
-    );
-  };
 
   const toggle = (open: boolean) => {
     if (!menu || !btn) return;
     btn.setAttribute('aria-expanded', String(open));
-    btn.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
-    menu.setAttribute('aria-hidden', String(!open));
     menu.style.transform = open ? 'translateX(0)' : 'translateX(100%)';
     if (nav) {
       if (open) nav.dataset.menuOpen = 'true';
@@ -146,14 +131,6 @@ const links = [
     if (top) top.style.transform = open ? 'translateY(3px) rotate(45deg)' : '';
     if (bot) bot.style.transform = open ? 'translateY(-3px) rotate(-45deg)' : '';
     document.body.style.overflow = open ? 'hidden' : '';
-    if (open) {
-      lastFocusedBeforeMenu = document.activeElement as HTMLElement | null;
-      const focusables = getFocusable();
-      focusables[0]?.focus();
-    } else {
-      lastFocusedBeforeMenu?.focus();
-      lastFocusedBeforeMenu = null;
-    }
   };
 
   btn?.addEventListener('click', () => {
@@ -164,32 +141,4 @@ const links = [
   document.querySelectorAll('[data-menu-link]').forEach((l) =>
     l.addEventListener('click', () => toggle(false))
   );
-
-  document.addEventListener('keydown', (event) => {
-    if (!btn || !menu) return;
-    const isOpen = btn.getAttribute('aria-expanded') === 'true';
-    if (!isOpen) return;
-
-    if (event.key === 'Escape') {
-      event.preventDefault();
-      toggle(false);
-      return;
-    }
-
-    if (event.key !== 'Tab') return;
-    const focusables = getFocusable();
-    if (!focusables.length) return;
-
-    const first = focusables[0];
-    const last = focusables[focusables.length - 1];
-    const active = document.activeElement;
-
-    if (event.shiftKey && active === first) {
-      event.preventDefault();
-      last.focus();
-    } else if (!event.shiftKey && active === last) {
-      event.preventDefault();
-      first.focus();
-    }
-  });
 </script>

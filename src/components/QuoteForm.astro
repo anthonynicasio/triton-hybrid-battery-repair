@@ -65,27 +65,13 @@ const stepTitles = [
       <p class="mt-2 text-slate-500 text-sm" data-step-subtitle>Takes under a minute — no obligation.</p>
     </div>
     <div class="shrink-0 text-right">
-      <div
-        class="text-xs font-semibold uppercase tracking-wider text-brand-600"
-        data-step-counter
-        aria-live="polite"
-      >
-        Step 1 of 4
-      </div>
+      <div class="text-xs font-semibold uppercase tracking-wider text-brand-600" data-step-counter>Step 1 of 4</div>
       <div class="mt-1.5 text-[11px] text-slate-400">4.9★ · 156 reviews</div>
     </div>
   </div>
 
   <!-- Progress bar -->
-  <div
-    class="mt-5 h-1.5 w-full rounded-full bg-slate-100 overflow-hidden"
-    role="progressbar"
-    aria-valuemin="0"
-    aria-valuemax="100"
-    aria-valuenow="25"
-    aria-label="Quote form progress"
-    data-progress-region
-  >
+  <div class="mt-5 h-1.5 w-full rounded-full bg-slate-100 overflow-hidden">
     <div
       data-progress-bar
       class="h-full bg-brand-600 transition-[width] duration-500 ease-out"
@@ -173,27 +159,23 @@ const stepTitles = [
       class="transition-all duration-300 ease-out"
       hidden
     >
-      <fieldset>
-        <legend class="text-sm text-slate-500 mb-4">
-          Select all that apply. We'll use this to prep the right diagnostic.
-        </legend>
-        <div class="grid grid-cols-2 gap-3">
-          {issues.map((it) => (
-            <label
-              data-issue-card
-              class="group relative flex items-start gap-3 p-3.5 rounded-xl border border-slate-200 bg-slate-50 hover:bg-white hover:border-brand-300 cursor-pointer transition-all duration-200 has-[:checked]:bg-brand-50 has-[:checked]:border-brand-500 has-[:checked]:ring-2 has-[:checked]:ring-brand-500/30"
-            >
-              <input type="checkbox" name="issues" value={it.label} class="sr-only peer" />
-              <span class="shrink-0 inline-flex items-center justify-center w-9 h-9 rounded-lg bg-white text-slate-600 ring-1 ring-slate-200 group-hover:text-brand-600 peer-checked:bg-brand-600 peer-checked:text-white peer-checked:ring-brand-600 transition-colors duration-200">
-                <Fragment set:html={it.icon} />
-              </span>
-              <span class="flex-1 text-sm font-semibold text-slate-800 leading-snug pt-1.5">{it.label}</span>
-              <svg class="absolute top-2.5 right-2.5 w-4 h-4 text-brand-600 opacity-0 peer-checked:opacity-100 transition-opacity duration-200" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-            </label>
-          ))}
-        </div>
-      </fieldset>
-      <p data-issues-error id="qf-issues-error" class="hidden mt-3 text-xs text-red-600 font-medium" role="alert">Please pick at least one option so we can help.</p>
+      <p class="text-sm text-slate-500 mb-4">Select all that apply. We'll use this to prep the right diagnostic.</p>
+      <div class="grid grid-cols-2 gap-3">
+        {issues.map((it) => (
+          <label
+            data-issue-card
+            class="group relative flex items-start gap-3 p-3.5 rounded-xl border border-slate-200 bg-slate-50 hover:bg-white hover:border-brand-300 cursor-pointer transition-all duration-200 has-[:checked]:bg-brand-50 has-[:checked]:border-brand-500 has-[:checked]:ring-2 has-[:checked]:ring-brand-500/30"
+          >
+            <input type="checkbox" name="issues" value={it.label} class="sr-only peer" />
+            <span class="shrink-0 inline-flex items-center justify-center w-9 h-9 rounded-lg bg-white text-slate-600 ring-1 ring-slate-200 group-hover:text-brand-600 peer-checked:bg-brand-600 peer-checked:text-white peer-checked:ring-brand-600 transition-colors duration-200">
+              <Fragment set:html={it.icon} />
+            </span>
+            <span class="flex-1 text-sm font-semibold text-slate-800 leading-snug pt-1.5">{it.label}</span>
+            <svg class="absolute top-2.5 right-2.5 w-4 h-4 text-brand-600 opacity-0 peer-checked:opacity-100 transition-opacity duration-200" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+          </label>
+        ))}
+      </div>
+      <p data-issues-error class="hidden mt-3 text-xs text-red-600 font-medium">Please pick at least one option so we can help.</p>
     </section>
 
     <!-- STEP 4: details + files -->
@@ -271,10 +253,9 @@ const stepTitles = [
   </p>
 
   <!-- Submission error -->
-  <div data-form-error class="hidden mt-4 rounded-xl bg-red-50 border border-red-200 p-3 text-sm text-red-700" role="alert">
+  <div data-form-error class="hidden mt-4 rounded-xl bg-red-50 border border-red-200 p-3 text-sm text-red-700">
     Something went wrong sending your request. Please call <a href="tel:+17032619442" class="font-bold underline">(703) 261-9442</a> or email <a href="mailto:tritonhybridbattery@gmail.com" class="font-bold underline">tritonhybridbattery@gmail.com</a>.
   </div>
-  <p class="sr-only" aria-live="polite" aria-atomic="true" data-form-announcer></p>
 </form>
 
 <script>
@@ -286,7 +267,6 @@ const stepTitles = [
     const isLocalDev = ['localhost', '127.0.0.1'].includes(window.location.hostname);
     const panels = Array.from(form.querySelectorAll<HTMLElement>('[data-step-panel]'));
     const bar = form.querySelector<HTMLElement>('[data-progress-bar]');
-    const progressRegion = form.querySelector<HTMLElement>('[data-progress-region]');
     const title = form.querySelector<HTMLElement>('[data-step-title]');
     const subtitle = form.querySelector<HTMLElement>('[data-step-subtitle]');
     const counter = form.querySelector<HTMLElement>('[data-step-counter]');
@@ -303,7 +283,6 @@ const stepTitles = [
     const makeSelect = form.querySelector<HTMLSelectElement>('#qf-make');
     const makeOtherWrap = form.querySelector<HTMLElement>('[data-make-other-wrap]');
     const makeOtherInput = form.querySelector<HTMLInputElement>('[data-make-other-input]');
-    const announcer = form.querySelector<HTMLElement>('[data-form-announcer]');
 
     const titles = [
       { h: 'Get Your Honest Quote', s: 'Takes under a minute — no obligation.' },
@@ -337,7 +316,6 @@ const stepTitles = [
         ? (current / TOTAL_INPUT_STEPS) * 100
         : 100;
       if (bar) bar.style.width = pct + '%';
-      if (progressRegion) progressRegion.setAttribute('aria-valuenow', Math.round(pct).toString());
 
       const t = titles[current - 1];
       if (title) title.textContent = t.h;
@@ -347,11 +325,6 @@ const stepTitles = [
         : 'Complete';
 
       setPanelVisibility(current);
-      if (announcer) {
-        announcer.textContent = current <= TOTAL_INPUT_STEPS
-          ? `Now on step ${current} of ${TOTAL_INPUT_STEPS}: ${t.h}`
-          : 'Quote request sent successfully';
-      }
 
       if (backBtn) backBtn.style.visibility = (current > 1 && current <= TOTAL_INPUT_STEPS) ? 'visible' : 'hidden';
       if (nextLabel) {
@@ -368,33 +341,17 @@ const stepTitles = [
 
       if (current === 3) {
         const checked = panel.querySelectorAll<HTMLInputElement>('input[name="issues"]:checked');
-        const issueInputs = panel.querySelectorAll<HTMLInputElement>('input[name="issues"]');
         if (checked.length === 0) {
-          issueInputs.forEach((input) => {
-            input.setAttribute('aria-invalid', 'true');
-            input.setAttribute('aria-describedby', 'qf-issues-error');
-          });
           issuesError?.classList.remove('hidden');
-          if (announcer) announcer.textContent = 'Please select at least one issue before continuing';
           return false;
         }
-        issueInputs.forEach((input) => {
-          input.removeAttribute('aria-invalid');
-          input.removeAttribute('aria-describedby');
-        });
         issuesError?.classList.add('hidden');
         return true;
       }
 
       const fields = Array.from(panel.querySelectorAll<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>('input, select, textarea'));
       for (const f of fields) {
-        if (f.hasAttribute('required') && !f.checkValidity()) {
-          f.setAttribute('aria-invalid', 'true');
-        } else {
-          f.removeAttribute('aria-invalid');
-        }
         if (!f.checkValidity()) {
-          if (announcer) announcer.textContent = `${f.labels?.[0]?.textContent ?? 'This field'} is required or invalid.`;
           f.reportValidity();
           return false;
         }
@@ -409,16 +366,6 @@ const stepTitles = [
       // Keep form top in view on mobile when advancing.
       if (window.innerWidth < 1024) {
         form?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      }
-      const nextHeading = form.querySelector<HTMLElement>(`[data-step-panel="${next}"] h2, [data-step-panel="${next}"] legend, [data-step-panel="${next}"] h3`);
-      if (nextHeading) {
-        nextHeading.setAttribute('tabindex', '-1');
-        nextHeading.focus();
-      } else {
-        const firstField = form.querySelector<HTMLElement>(
-          `[data-step-panel="${next}"] input, [data-step-panel="${next}"] select, [data-step-panel="${next}"] textarea, [data-step-panel="${next}"] button`
-        );
-        firstField?.focus();
       }
     };
 
@@ -461,7 +408,6 @@ const stepTitles = [
       } catch (err) {
         console.error(err);
         errorBox?.classList.remove('hidden');
-        if (announcer) announcer.textContent = 'There was an error sending your request. Please call us.';
       } finally {
         submitting = false;
         nextBtn?.removeAttribute('disabled');
@@ -499,12 +445,10 @@ const stepTitles = [
       if (fileInput.files.length === 0) {
         fileList.classList.add('hidden');
         if (fileLabel) fileLabel.textContent = 'Dashboard lights, code scans, estimates';
-        if (announcer) announcer.textContent = 'No files attached';
         return;
       }
       fileList.classList.remove('hidden');
       if (fileLabel) fileLabel.textContent = `${fileInput.files.length} file${fileInput.files.length === 1 ? '' : 's'} attached`;
-      if (announcer) announcer.textContent = `${fileInput.files.length} file${fileInput.files.length === 1 ? '' : 's'} attached`;
       Array.from(fileInput.files).forEach((file) => {
         const li = document.createElement('li');
         li.className = 'flex items-center gap-2 text-xs text-slate-600 bg-slate-50 rounded-lg px-3 py-1.5';
