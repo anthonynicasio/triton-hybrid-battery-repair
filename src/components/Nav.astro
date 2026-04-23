@@ -5,7 +5,7 @@ const links = [
   { href: '#about',     label: 'About' },
   { href: '#reviews',   label: 'Reviews' },
   { href: '#how',       label: 'How It Works' },
-  { href: '#booking',   label: 'Book Now' },
+  { href: '#booking',   label: 'Schedule' },
 ];
 ---
 
@@ -63,10 +63,10 @@ const links = [
           (703) 261-9442
         </a>
         <a
-          href="#booking"
+          href="#hero-form"
           class="hidden sm:inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-brand-600 hover:bg-brand-700 text-white text-sm font-semibold shadow-brand hover:-translate-y-0.5 transition-all duration-300"
         >
-          Book Appointment
+          Get Free Quote
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
         </a>
 
@@ -101,12 +101,19 @@ const links = [
         >{l.label}</a>
       ))}
       <a
-        href="#booking"
+        href="#hero-form"
         data-menu-link
         class="mt-6 inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl bg-brand-600 hover:bg-brand-700 text-white text-base font-semibold shadow-lg transition-all"
       >
-        Book Appointment
+        Get Free Quote
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+      </a>
+      <a
+        href="#booking"
+        data-menu-link
+        class="mt-3 inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl bg-slate-50 hover:bg-slate-100 text-slate-700 text-sm font-semibold ring-1 ring-slate-200 transition-all"
+      >
+        Schedule Appointment
       </a>
       <a href="tel:+17032619442" class="mt-4 text-sm text-slate-500">Or call — (703) 261-9442</a>
     </nav>
