@@ -16,5 +16,5 @@ Contact
 - Email: tritonhybridbattery@gmail.com
 
 Machine-readable files
-- Sitemap: https://tritonhybridbattery.com/sitemap.xml
+- Sitemap: https://tritonhybridbattery.com/sitemap-index.xml
 - Robots: https://tritonhybridbattery.com/robots.txt
