@@ -47,7 +47,7 @@ const stepTitles = [
   enctype="multipart/form-data"
   data-quote-form
   data-current-step="1"
-  class="relative bg-white rounded-2xl shadow-2xl ring-1 ring-slate-900/5 p-6 sm:p-8 lg:p-9"
+  class="relative scroll-mt-32 md:scroll-mt-28 bg-white rounded-2xl shadow-2xl ring-1 ring-slate-900/5 p-6 sm:p-8 lg:p-9"
   novalidate
 >
   <input type="hidden" name="form-name" value={FORM_NAME} />
@@ -126,6 +126,17 @@ const stepTitles = [
             {makes.map((m) => <option value={m}>{m}</option>)}
           </select>
         </div>
+      </div>
+      <div class="hidden" data-make-other-wrap>
+        <label for="qf-make-other" class="block text-xs font-semibold uppercase tracking-wide text-slate-500 mb-1.5">If other, tell us the make</label>
+        <input
+          id="qf-make-other"
+          name="make_other"
+          type="text"
+          placeholder="Subaru"
+          data-make-other-input
+          class="w-full px-4 py-3 rounded-xl border border-slate-200 bg-slate-50 text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-brand-600 focus:border-transparent focus:bg-white transition-all duration-300"
+        />
       </div>
       <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div>
@@ -269,6 +280,9 @@ const stepTitles = [
     const fileInput = form.querySelector<HTMLInputElement>('[data-file-input]');
     const fileList = form.querySelector<HTMLUListElement>('[data-file-list]');
     const fileLabel = form.querySelector<HTMLElement>('[data-file-label]');
+    const makeSelect = form.querySelector<HTMLSelectElement>('#qf-make');
+    const makeOtherWrap = form.querySelector<HTMLElement>('[data-make-other-wrap]');
+    const makeOtherInput = form.querySelector<HTMLInputElement>('[data-make-other-input]');
 
     const titles = [
       { h: 'Get Your Honest Quote', s: 'Takes under a minute — no obligation.' },
@@ -355,6 +369,14 @@ const stepTitles = [
       }
     };
 
+    const syncMakeOtherField = () => {
+      const showOtherMakeField = makeSelect?.value === 'Other';
+      if (!makeOtherWrap || !makeOtherInput) return;
+      makeOtherWrap.classList.toggle('hidden', !showOtherMakeField);
+      makeOtherInput.required = showOtherMakeField;
+      if (!showOtherMakeField) makeOtherInput.value = '';
+    };
+
     const submit = async () => {
       const formName = form.getAttribute('name') || '';
       const submitPath = form.getAttribute('action') || '/';
@@ -437,6 +459,9 @@ const stepTitles = [
 
     // Prevent native submit (button is type="button")
     form.addEventListener('submit', (e) => e.preventDefault());
+
+    makeSelect?.addEventListener('change', syncMakeOtherField);
+    syncMakeOtherField();
 
     render();
   }
