@@ -7,24 +7,11 @@ import Reviews from '../components/Reviews.astro';
 import HowItWorks from '../components/HowItWorks.astro';
 import Stats from '../components/Stats.astro';
 import ServiceArea from '../components/ServiceArea.astro';
-import { buildWebPageSchema } from '../data/seo';
-
-const pageTitle = "Triton Hybrid Battery Repair — Northern Virginia's Prius & Hybrid Specialist";
-const pageDescription =
-  'Honest Hybrid Experts. Dealership Quality Without Dealership Prices. Specialist hybrid battery diagnostics, repair, and replacement in Lorton, VA — serving all of Northern Virginia. 4.9★ on Google, 156+ reviews. Call (703) 261-9442.';
-
-const structuredData = [buildWebPageSchema({
-  path: '/',
-  title: pageTitle,
-  description: pageDescription,
-})];
 ---
 
 <Base
-  title={pageTitle}
-  description={pageDescription}
-  canonicalPath="/"
-  structuredData={structuredData}
+  title="Triton Hybrid Battery Repair — Northern Virginia's Prius & Hybrid Specialist"
+  description="Honest Hybrid Experts. Dealership Quality Without Dealership Prices. Specialist hybrid battery diagnostics, repair, and replacement in Lorton, VA — serving all of Northern Virginia. 4.9★ on Google, 156+ reviews. Call (703) 261-9442."
 >
   <Hero />
   <Stats />

@@ -2,37 +2,20 @@
 import '../styles/global.css';
 import Nav from '../components/Nav.astro';
 import Footer from '../components/Footer.astro';
-import {
-  DEFAULT_OG_IMAGE_ALT,
-  DEFAULT_OG_IMAGE_PATH,
-  SITE_URL,
-  defaultStructuredData,
-} from '../data/seo';
 
 interface Props {
   title?: string;
   description?: string;
   canonicalPath?: string;
-  ogImagePath?: string;
-  ogImageAlt?: string;
-  robots?: string;
-  structuredData?: Array<Record<string, unknown>>;
 }
 
 const {
   title = "Triton Hybrid Battery Repair — Northern Virginia's Prius & Hybrid Specialist",
   description = 'Honest Hybrid Experts. Dealership Quality Without Dealership Prices. Specialist hybrid battery diagnostics, repair, and replacement. 4.9★ on Google, 156+ reviews.',
   canonicalPath = Astro.url.pathname,
-  ogImagePath = DEFAULT_OG_IMAGE_PATH,
-  ogImageAlt = DEFAULT_OG_IMAGE_ALT,
-  robots = 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1',
-  structuredData = [],
 } = Astro.props;
 
-const siteUrl = Astro.site ?? SITE_URL;
-const canonicalUrl = new URL(canonicalPath, siteUrl).toString();
-const ogImageUrl = new URL(ogImagePath, siteUrl).toString();
-const mergedStructuredData = [...defaultStructuredData, ...structuredData];
+const canonicalUrl = new URL(canonicalPath, Astro.site).toString();
 ---
 
 <!doctype html>
@@ -41,25 +24,15 @@ const mergedStructuredData = [...defaultStructuredData, ...structuredData];
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <meta name="description" content={description} />
-    <meta name="robots" content={robots} />
-    <meta name="googlebot" content={robots} />
     <meta name="theme-color" content="#1e4d44" />
     <link rel="icon" type="image/png" href="/images/logo.png" />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:type" content="website" />
     <meta property="og:url" content={canonicalUrl} />
-    <meta property="og:image" content={ogImageUrl} />
-    <meta property="og:image:alt" content={ogImageAlt} />
-    <meta property="og:locale" content="en_US" />
+    <meta property="og:image" content="/images/logo.png" />
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content={title} />
-    <meta name="twitter:description" content={description} />
-    <meta name="twitter:image" content={ogImageUrl} />
     <link rel="canonical" href={canonicalUrl} />
-    {mergedStructuredData.map((schema) => (
-      <script type="application/ld+json" set:html={JSON.stringify(schema)} />
-    ))}
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />

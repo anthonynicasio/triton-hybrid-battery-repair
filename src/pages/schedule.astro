@@ -1,31 +1,12 @@
 ---
 import Base from '../layouts/Base.astro';
-import { buildBreadcrumbSchema, buildWebPageSchema } from '../data/seo';
 
 const pageTitle = 'Schedule Hybrid Repair in Lorton, VA | Triton Hybrid Battery Repair';
 const pageDescription =
   'Schedule hybrid battery repair, diagnostics, and Prius service in Lorton with Triton Hybrid Battery Repair. Get a free quote and book your visit.';
-
-const canonicalPath = '/schedule/';
-const structuredData = [
-  buildWebPageSchema({
-    path: canonicalPath,
-    title: pageTitle,
-    description: pageDescription,
-  }),
-  buildBreadcrumbSchema([
-    { name: 'Home', path: '/' },
-    { name: 'Schedule', path: canonicalPath },
-  ]),
-];
 ---
 
-<Base
-  title={pageTitle}
-  description={pageDescription}
-  canonicalPath={canonicalPath}
-  structuredData={structuredData}
->
+<Base title={pageTitle} description={pageDescription} canonicalPath="/schedule/">
   <section class="bg-slate-50 py-16 md:py-20">
     <div class="mx-auto max-w-5xl px-5 md:px-8">
       <span class="text-xs font-bold tracking-[0.2em] uppercase text-brand-600">Schedule Service</span>

@@ -1,11 +1,6 @@
 ---
 import Base from '../../layouts/Base.astro';
 import { servicePages, type ServicePage } from '../../data/services';
-import {
-  buildBreadcrumbSchema,
-  buildServiceSchema,
-  buildWebPageSchema,
-} from '../../data/seo';
 
 export function getStaticPaths() {
   return servicePages.map((service) => ({
@@ -18,32 +13,9 @@ const { service } = Astro.props as { service: ServicePage };
 
 const pageTitle = `${service.name} in Lorton, VA | Triton Hybrid Battery Repair`;
 const pageDescription = `${service.shortDescription} Schedule ${service.name.toLowerCase()} service in Northern Virginia with Triton Hybrid Battery Repair.`;
-const canonicalPath = `/services/${service.slug}/`;
-const structuredData = [
-  buildWebPageSchema({
-    path: canonicalPath,
-    title: pageTitle,
-    description: pageDescription,
-  }),
-  buildBreadcrumbSchema([
-    { name: 'Home', path: '/' },
-    { name: 'Services', path: '/services/' },
-    { name: service.name, path: canonicalPath },
-  ]),
-  buildServiceSchema({
-    name: service.name,
-    description: service.shortDescription,
-    path: canonicalPath,
-  }),
-];
 ---
 
-<Base
-  title={pageTitle}
-  description={pageDescription}
-  canonicalPath={canonicalPath}
-  structuredData={structuredData}
->
+<Base title={pageTitle} description={pageDescription} canonicalPath={`/services/${service.slug}/`}>
   <section class="bg-white py-14 md:py-20">
     <div class="mx-auto max-w-5xl px-5 md:px-8">
       <a href="/services/" class="inline-flex items-center gap-2 text-sm font-semibold text-brand-600 hover:gap-3 transition-all">
