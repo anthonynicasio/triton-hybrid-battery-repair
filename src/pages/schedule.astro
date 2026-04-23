@@ -1,34 +1,69 @@
 ---
 import Base from '../layouts/Base.astro';
 import Booking from '../components/Booking.astro';
+
+const pageTitle = 'Schedule Hybrid Repair in Lorton, VA | Triton Hybrid Battery Repair';
+const pageDescription =
+  'Schedule hybrid battery repair, diagnostics, and Prius service in Lorton with Triton Hybrid Battery Repair. Get a free quote and book your visit.';
 ---
 
-<Base
-  title="Book Appointment | Triton Hybrid Battery Repair"
-  description="Schedule your hybrid battery diagnostic appointment with Triton Hybrid in Northern Virginia."
->
-  <section id="schedule-top" class="bg-slate-50 py-16 md:py-20">
-    <div class="mx-auto max-w-7xl px-5 md:px-8">
-      <div class="mx-auto max-w-3xl text-center reveal">
-        <span class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-brand-50 text-brand-700 text-xs font-semibold tracking-wide uppercase ring-1 ring-brand-200">
-          High-intent booking
-        </span>
-        <h1 class="mt-4 text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-slate-900">
-          Book Your Hybrid Appointment
-        </h1>
-        <p class="mt-4 text-slate-600 text-lg leading-relaxed">
-          Already ready to move forward? Choose a time below and lock in your diagnostic visit.
-        </p>
+<Base title={pageTitle} description={pageDescription} canonicalPath="/schedule/">
+  <section class="bg-slate-50 py-16 md:py-20">
+    <div class="mx-auto max-w-5xl px-5 md:px-8">
+      <span class="text-xs font-bold tracking-[0.2em] uppercase text-brand-600">Schedule Service</span>
+      <h1 class="mt-3 text-4xl md:text-5xl font-extrabold tracking-tight text-slate-900">
+        Schedule your visit with Triton Hybrid
+      </h1>
+      <p class="mt-4 text-lg text-slate-600 max-w-3xl">
+        Tell us what your vehicle is doing and we will recommend the right next step.
+        We serve drivers from Lorton, Alexandria, Springfield, Arlington, and Washington, DC.
+      </p>
+
+      <div class="mt-10 grid grid-cols-1 md:grid-cols-2 gap-6">
+        <article class="rounded-2xl bg-white ring-1 ring-slate-900/5 shadow-sm p-6">
+          <h2 class="text-xl font-bold text-slate-900">How scheduling works</h2>
+          <ol class="mt-4 space-y-3 text-slate-600 text-sm">
+            <li>1. Request a free quote with your vehicle details.</li>
+            <li>2. We review symptoms and recommend the right diagnostic path.</li>
+            <li>3. We confirm a service window and keep you updated throughout.</li>
+          </ol>
+        </article>
+        <article class="rounded-2xl bg-white ring-1 ring-slate-900/5 shadow-sm p-6">
+          <h2 class="text-xl font-bold text-slate-900">Need help fast?</h2>
+          <p class="mt-3 text-sm text-slate-600 leading-relaxed">
+            Call us directly for same-day guidance when warning lights, no-start issues,
+            or major drivability concerns show up.
+          </p>
+          <a
+            href="tel:+17032619442"
+            class="mt-5 inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-white ring-1 ring-slate-200 hover:ring-slate-300 text-slate-900 font-semibold transition-all"
+          >
+            Call (703) 261-9442
+          </a>
+        </article>
       </div>
 
-      <div class="mt-8 mx-auto max-w-4xl rounded-2xl bg-white ring-1 ring-slate-200 p-5 md:p-6 reveal">
-        <p class="text-sm text-slate-600 leading-relaxed">
-          Want pricing guidance or a second opinion first?
-          <a href="/#hero-form" class="font-semibold text-brand-700 hover:text-brand-600 transition-colors">Start with a free quote</a>.
-          We usually respond in under one business hour.
+      <div class="mt-10 rounded-2xl bg-brand-600 text-white p-7 md:p-8">
+        <h2 class="text-2xl font-bold">Get started with a free quote</h2>
+        <p class="mt-2 text-brand-100">
+          Share your vehicle info in our quick form and we will follow up with clear next steps.
         </p>
+        <div class="mt-6 flex flex-wrap gap-3">
+          <a
+            href="/#hero-form"
+            class="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-white text-brand-700 font-semibold hover:bg-slate-100 transition-colors"
+          >
+            Get Free Quote
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+          </a>
+          <a
+            href="/schedule/#booking"
+            class="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-white/10 text-white font-semibold ring-1 ring-white/30 hover:bg-white/20 transition-colors"
+          >
+            Book with Calendly
+          </a>
+        </div>
       </div>
-
     </div>
   </section>
   <Booking />

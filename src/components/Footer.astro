@@ -1,4 +1,6 @@
 ---
+import { topServicePages } from '../data/services';
+
 const year = new Date().getFullYear();
 ---
 
@@ -14,18 +16,19 @@ const year = new Date().getFullYear();
       Talk to a real hybrid specialist today. Free quote, no pressure, no upsell.
     </p>
     <div class="mt-8 flex flex-wrap gap-3 justify-center">
-        <a
-          href="/#hero-form"
+      <a
+        href="tel:+17032619442"
         class="inline-flex items-center gap-2 px-7 py-4 rounded-xl bg-brand-500 hover:bg-brand-600 text-white font-semibold shadow-brand hover:-translate-y-0.5 transition-all duration-300"
       >
-        Get Free Quote
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.37 1.9.72 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.35 1.85.59 2.81.72A2 2 0 0 1 22 16.92Z"/></svg>
+        Call (703) 261-9442
       </a>
       <a
-        href="/schedule"
-        class="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-transparent text-slate-200 text-sm font-medium ring-1 ring-white/20 hover:ring-white/40 hover:text-white transition-all duration-300"
+        href="/#hero-form"
+        class="inline-flex items-center gap-2 px-7 py-4 rounded-xl bg-white/10 hover:bg-white/20 text-white font-semibold ring-1 ring-white/20 hover:-translate-y-0.5 transition-all duration-300"
       >
-        Schedule Appointment
+        Request Free Quote
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
       </a>
     </div>
   </div>
@@ -36,7 +39,7 @@ const year = new Date().getFullYear();
     <div class="grid grid-cols-2 lg:grid-cols-4 gap-10 md:gap-8">
       <!-- Logo + bio -->
       <div class="col-span-2 lg:col-span-1">
-        <a href="#top" class="flex items-center gap-3">
+        <a href="/" class="flex items-center gap-3">
           <img src="/images/logo.png" alt="Triton Hybrid Battery Repair" class="h-14 w-14 object-contain" width="56" height="56" />
           <span class="flex flex-col leading-tight">
             <span class="font-extrabold text-lg text-white">Triton Hybrid</span>
@@ -65,12 +68,12 @@ const year = new Date().getFullYear();
       <div>
         <h4 class="text-white font-bold text-sm tracking-wide uppercase">Quick Links</h4>
         <ul class="mt-5 space-y-3 text-sm">
-          <li><a href="#about" class="text-slate-400 hover:text-brand-400 transition-colors">About</a></li>
-          <li><a href="#services" class="text-slate-400 hover:text-brand-400 transition-colors">Services</a></li>
-          <li><a href="#reviews" class="text-slate-400 hover:text-brand-400 transition-colors">Reviews</a></li>
-          <li><a href="#how" class="text-slate-400 hover:text-brand-400 transition-colors">How It Works</a></li>
+          <li><a href="/#about" class="text-slate-400 hover:text-brand-400 transition-colors">About</a></li>
+          <li><a href="/services/" class="text-slate-400 hover:text-brand-400 transition-colors">Services</a></li>
+          <li><a href="/service-areas/" class="text-slate-400 hover:text-brand-400 transition-colors">Service Areas</a></li>
+          <li><a href="/schedule/" class="text-slate-400 hover:text-brand-400 transition-colors">Schedule</a></li>
+          <li><a href="/#reviews" class="text-slate-400 hover:text-brand-400 transition-colors">Reviews</a></li>
           <li><a href="/#hero-form" class="text-slate-400 hover:text-brand-400 transition-colors">Get Free Quote</a></li>
-          <li><a href="/schedule" class="text-slate-400 hover:text-brand-400 transition-colors">Schedule Appointment</a></li>
         </ul>
       </div>
 
@@ -78,11 +81,12 @@ const year = new Date().getFullYear();
       <div>
         <h4 class="text-white font-bold text-sm tracking-wide uppercase">Services</h4>
         <ul class="mt-5 space-y-3 text-sm">
-          <li><a href="#services" class="text-slate-400 hover:text-brand-400 transition-colors">Hybrid Battery Diagnostics</a></li>
-          <li><a href="#services" class="text-slate-400 hover:text-brand-400 transition-colors">Battery Repair &amp; Reconditioning</a></li>
-          <li><a href="#services" class="text-slate-400 hover:text-brand-400 transition-colors">Battery Replacement</a></li>
-          <li><a href="#services" class="text-slate-400 hover:text-brand-400 transition-colors">Prius Specialty Repair</a></li>
-          <li><a href="#services" class="text-slate-400 hover:text-brand-400 transition-colors">Hybrid Cooling System</a></li>
+          {topServicePages.map((service) => (
+            <li>
+              <a href={`/services/${service.slug}/`} class="text-slate-400 hover:text-brand-400 transition-colors">{service.name}</a>
+            </li>
+          ))}
+          <li><a href="/services/" class="text-brand-300 hover:text-brand-400 transition-colors font-semibold">View all services</a></li>
         </ul>
       </div>
 

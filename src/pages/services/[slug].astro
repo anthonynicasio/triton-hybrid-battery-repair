@@ -1,0 +1,81 @@
+---
+import Base from '../../layouts/Base.astro';
+import { servicePages, type ServicePage } from '../../data/services';
+
+export function getStaticPaths() {
+  return servicePages.map((service) => ({
+    params: { slug: service.slug },
+    props: { service },
+  }));
+}
+
+const { service } = Astro.props as { service: ServicePage };
+
+const pageTitle = `${service.name} in Lorton, VA | Triton Hybrid Battery Repair`;
+const pageDescription = `${service.shortDescription} Schedule ${service.name.toLowerCase()} service in Northern Virginia with Triton Hybrid Battery Repair.`;
+---
+
+<Base title={pageTitle} description={pageDescription} canonicalPath={`/services/${service.slug}/`}>
+  <section class="bg-white py-14 md:py-20">
+    <div class="mx-auto max-w-5xl px-5 md:px-8">
+      <a href="/services/" class="inline-flex items-center gap-2 text-sm font-semibold text-brand-600 hover:gap-3 transition-all">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M11 18l-6-6 6-6"/></svg>
+        Back to all services
+      </a>
+      <span class="mt-6 inline-flex items-center rounded-full bg-brand-50 text-brand-700 text-xs font-semibold tracking-wide uppercase px-3 py-1.5 ring-1 ring-brand-200">
+        Lorton & Northern Virginia
+      </span>
+      <h1 class="mt-4 text-4xl md:text-5xl font-extrabold tracking-tight text-slate-900">{service.name}</h1>
+      <p class="mt-4 text-lg text-slate-600">{service.detail}</p>
+
+      <div class="mt-10 grid grid-cols-1 md:grid-cols-2 gap-6">
+        <article class="rounded-2xl bg-slate-50 p-6 ring-1 ring-slate-900/5">
+          <h2 class="text-xl font-bold text-slate-900">What this service includes</h2>
+          <ul class="mt-4 space-y-2.5">
+            {service.includes.map((item) => (
+              <li class="flex items-start gap-2.5 text-slate-700">
+                <svg class="shrink-0 text-brand-600 mt-1" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                <span>{item}</span>
+              </li>
+            ))}
+          </ul>
+        </article>
+        <article class="rounded-2xl bg-slate-50 p-6 ring-1 ring-slate-900/5">
+          <h2 class="text-xl font-bold text-slate-900">Why local drivers choose us</h2>
+          <ul class="mt-4 space-y-2.5">
+            {service.benefits.map((item) => (
+              <li class="flex items-start gap-2.5 text-slate-700">
+                <svg class="shrink-0 text-brand-600 mt-1" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                <span>{item}</span>
+              </li>
+            ))}
+          </ul>
+        </article>
+      </div>
+
+      <div class="mt-10 rounded-2xl bg-brand-600 text-white p-7 md:p-8">
+        <h2 class="text-2xl font-bold">Need {service.name.toLowerCase()} now?</h2>
+        <p class="mt-2 text-brand-100">
+          Get a clear next step from our Lorton team before any work begins.
+        </p>
+        <div class="mt-6">
+          <a href="/#hero-form" class="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-white text-brand-700 font-semibold hover:bg-slate-100 transition-colors">
+            Get Free Quote
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <div class="mt-8 flex flex-wrap gap-3 text-sm">
+        <a href="/service-areas/" class="inline-flex items-center gap-1.5 font-semibold text-brand-600 hover:gap-2.5 transition-all">
+          See service areas
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+        </a>
+        <a href="/schedule/" class="inline-flex items-center gap-1.5 font-semibold text-brand-600 hover:gap-2.5 transition-all">
+          Schedule service
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+        </a>
+      </div>
+    </div>
+  </section>
+</Base>
