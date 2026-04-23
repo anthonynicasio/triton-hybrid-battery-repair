@@ -1,5 +1,9 @@
 ---
 import Base from '../layouts/Base.astro';
+import {
+  buildBreadcrumbSchema,
+  buildWebPageSchema,
+} from '../data/seo';
 
 const serviceAreas = [
   {
@@ -32,9 +36,27 @@ const serviceAreas = [
 const pageTitle = 'Hybrid Repair Service Areas | Lorton, Alexandria, Springfield, Arlington & Washington DC';
 const pageDescription =
   'See the cities Triton Hybrid Battery Repair serves across Northern Virginia and the DMV, including Lorton, Alexandria, Springfield, Arlington, and Washington DC.';
+const canonicalPath = '/service-areas/';
+const structuredData = [
+  buildWebPageSchema({
+    path: canonicalPath,
+    title: pageTitle,
+    description: pageDescription,
+    pageType: 'CollectionPage',
+  }),
+  buildBreadcrumbSchema([
+    { name: 'Home', path: '/' },
+    { name: 'Service Areas', path: canonicalPath },
+  ]),
+];
 ---
 
-<Base title={pageTitle} description={pageDescription} canonicalPath="/service-areas/">
+<Base
+  title={pageTitle}
+  description={pageDescription}
+  canonicalPath={canonicalPath}
+  structuredData={structuredData}
+>
   <section class="bg-slate-50 py-16 md:py-20">
     <div class="mx-auto max-w-7xl px-5 md:px-8">
       <span class="text-xs font-bold tracking-[0.2em] uppercase text-brand-600">Service Areas</span>

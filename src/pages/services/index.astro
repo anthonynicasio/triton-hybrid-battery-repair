@@ -1,13 +1,44 @@
 ---
 import Base from '../../layouts/Base.astro';
 import { servicePages } from '../../data/services';
+import {
+  buildBreadcrumbSchema,
+  buildServiceSchema,
+  buildWebPageSchema,
+} from '../../data/seo';
 
 const pageTitle = 'Hybrid Battery Repair & Auto Services in Lorton, VA | Triton Hybrid';
 const pageDescription =
   'Explore Prius battery replacement, hybrid battery repair, diagnostic service, and full auto care from Triton Hybrid in Lorton serving Northern Virginia and the DMV.';
+
+const canonicalPath = '/services/';
+const structuredData = [
+  buildWebPageSchema({
+    path: canonicalPath,
+    title: pageTitle,
+    description: pageDescription,
+    pageType: 'CollectionPage',
+  }),
+  buildBreadcrumbSchema([
+    { name: 'Home', path: '/' },
+    { name: 'Services', path: canonicalPath },
+  ]),
+  ...servicePages.map((service) =>
+    buildServiceSchema({
+      name: service.name,
+      description: service.shortDescription,
+      path: `/services/${service.slug}/`,
+    })
+  ),
+];
 ---
 
-<Base title={pageTitle} description={pageDescription} canonicalPath="/services/">
+<Base
+  title={pageTitle}
+  description={pageDescription}
+  canonicalPath={canonicalPath}
+  structuredData={structuredData}
+>
   <section class="bg-slate-50 py-16 md:py-20">
     <div class="mx-auto max-w-7xl px-5 md:px-8">
       <span class="text-xs font-bold tracking-[0.2em] uppercase text-brand-600">Our Services</span>
