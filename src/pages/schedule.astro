@@ -1,0 +1,35 @@
+---
+import Base from '../layouts/Base.astro';
+import Booking from '../components/Booking.astro';
+---
+
+<Base
+  title="Book Appointment | Triton Hybrid Battery Repair"
+  description="Schedule your hybrid battery diagnostic appointment with Triton Hybrid in Northern Virginia."
+>
+  <section id="schedule-top" class="bg-slate-50 py-16 md:py-20">
+    <div class="mx-auto max-w-7xl px-5 md:px-8">
+      <div class="mx-auto max-w-3xl text-center reveal">
+        <span class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-brand-50 text-brand-700 text-xs font-semibold tracking-wide uppercase ring-1 ring-brand-200">
+          High-intent booking
+        </span>
+        <h1 class="mt-4 text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-slate-900">
+          Book Your Hybrid Appointment
+        </h1>
+        <p class="mt-4 text-slate-600 text-lg leading-relaxed">
+          Already ready to move forward? Choose a time below and lock in your diagnostic visit.
+        </p>
+      </div>
+
+      <div class="mt-8 mx-auto max-w-4xl rounded-2xl bg-white ring-1 ring-slate-200 p-5 md:p-6 reveal">
+        <p class="text-sm text-slate-600 leading-relaxed">
+          Want pricing guidance or a second opinion first?
+          <a href="/#hero-form" class="font-semibold text-brand-700 hover:text-brand-600 transition-colors">Start with a free quote</a>.
+          We usually respond in under one business hour.
+        </p>
+      </div>
+
+    </div>
+  </section>
+  <Booking />
+</Base>
