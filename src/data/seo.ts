@@ -1,6 +1,6 @@
 export const SITE_URL = 'https://tritonhybridbattery.com';
 
-export const DEFAULT_OG_IMAGE_PATH = '/images/logo.png';
+export const DEFAULT_OG_IMAGE_PATH = '/images/logo.svg';
 export const DEFAULT_OG_IMAGE_ALT = 'Triton Hybrid Battery Repair logo';
 
 const ORGANIZATION_ID = `${SITE_URL}#organization`;
@@ -26,8 +26,8 @@ export const defaultStructuredData: JsonLd[] = [
     '@id': ORGANIZATION_ID,
     name: 'Triton Hybrid Battery Repair',
     url: SITE_URL,
-    image: absoluteUrl('/images/mechanic-lamp.png'),
-    logo: absoluteUrl('/images/logo.png'),
+    image: absoluteUrl('/images/logo.svg'),
+    logo: absoluteUrl('/images/logo.svg'),
     telephone: '+1-703-261-9442',
     email: 'tritonhybridbattery@gmail.com',
     address: {

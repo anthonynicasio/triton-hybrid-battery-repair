@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 900" role="img" aria-labelledby="title desc">
+  <title id="title">Hybrid service bay with oil and maintenance tools</title>
+  <desc id="desc">Illustrated workshop scene for oil change and maintenance service.</desc>
+  <rect width="1200" height="900" fill="#f8fafc" />
+  <rect y="640" width="1200" height="260" fill="#e2e8f0" />
+  <rect x="120" y="260" width="520" height="220" rx="28" fill="#1f2937" />
+  <circle cx="250" cy="560" r="82" fill="#0f172a" />
+  <circle cx="250" cy="560" r="45" fill="#94a3b8" />
+  <circle cx="530" cy="560" r="82" fill="#0f172a" />
+  <circle cx="530" cy="560" r="45" fill="#94a3b8" />
+  <rect x="700" y="170" width="380" height="520" rx="30" fill="#0f172a" />
+  <rect x="740" y="220" width="300" height="160" rx="22" fill="#334155" />
+  <path d="M840 470c34-62 58-94 70-94s36 32 70 94c-18 28-42 42-70 42s-52-14-70-42Z" fill="#f59e0b" />
+  <rect x="420" y="120" width="180" height="80" rx="16" fill="#4a9422" />
+  <text x="510" y="172" font-family="Inter, system-ui, sans-serif" font-size="44" text-anchor="middle" fill="#ffffff">OIL</text>
+</svg>
