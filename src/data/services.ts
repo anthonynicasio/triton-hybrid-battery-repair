@@ -9,6 +9,33 @@ export interface ServicePage {
 
 export const servicePages: ServicePage[] = [
   {
+    slug: 'prius-battery-replacement',
+    name: 'Prius Battery Replacement',
+    shortDescription: 'Prius battery replacement in Lorton with honest testing and clear options before any major spend.',
+    detail:
+      'When a Prius battery is beyond repair, we walk you through replacement options and costs so you can choose the right path with confidence.',
+    includes: ['Battery health verification', 'Replacement options by budget', 'Post-install system checks'],
+    benefits: ['Restore reliable hybrid performance', 'Avoid unnecessary upsells', 'Get back on the road quickly'],
+  },
+  {
+    slug: 'hybrid-battery-repair',
+    name: 'Hybrid Battery Repair',
+    shortDescription: 'Hybrid battery repair for warning lights, power loss, and poor fuel economy across Northern Virginia.',
+    detail:
+      'We diagnose failing modules and related components, then repair what is actually causing the issue instead of jumping straight to full replacement.',
+    includes: ['Module-level diagnostics', 'Targeted battery repair strategy', 'Hybrid system verification after service'],
+    benefits: ['Lower repair cost vs full replacement', 'Improve fuel economy', 'Increase daily driving confidence'],
+  },
+  {
+    slug: 'hybrid-diagnostic-service',
+    name: 'Hybrid Diagnostic Service',
+    shortDescription: 'Accurate hybrid diagnostic service in the DMV for warning lights and hard-to-track drivability issues.',
+    detail:
+      'Our team combines scan data and hands-on testing to isolate the true root cause before recommending any repair.',
+    includes: ['Full-system scan and testing', 'Root-cause findings report', 'Recommended next-step repair plan'],
+    benefits: ['Fix the right problem first', 'Reduce repeat shop visits', 'Make faster repair decisions'],
+  },
+  {
     slug: 'car-repair-maintenance-service',
     name: 'Car Repair and Maintenance Service',
     shortDescription: 'Complete routine maintenance and mechanical repair for reliable daily driving in Northern Virginia.',
@@ -119,6 +146,17 @@ export const servicePages: ServicePage[] = [
 ];
 
 export const topServicePages = servicePages.slice(0, 6);
+
+const homepageServiceSlugs = [
+  'prius-battery-replacement',
+  'hybrid-battery-repair',
+  'hybrid-diagnostic-service',
+  'oil-changes',
+];
+
+export const homepageServicePages = homepageServiceSlugs
+  .map((slug) => servicePages.find((service) => service.slug === slug))
+  .filter((service): service is ServicePage => Boolean(service));
 
 export const findServiceBySlug = (slug: string) =>
   servicePages.find((service) => service.slug === slug);
