@@ -29,6 +29,22 @@ npm run dev
 
 Then open `http://localhost:4321`.
 
+## Calendly booking setup
+
+The site now includes an inline booking section powered by Calendly.
+
+1. Add your scheduling URL in an environment file:
+
+```bash
+echo "PUBLIC_CALENDLY_URL=https://calendly.com/your-team/your-event" > .env
+```
+
+2. Restart dev server so Astro picks up the new env var.
+
+Notes:
+- Use a public Calendly event URL (team or individual).
+- If `PUBLIC_CALENDLY_URL` is not set, the site falls back to the default placeholder URL in `src/components/Booking.astro`.
+
 ## Build
 
 ```bash

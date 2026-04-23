@@ -1,0 +1,46 @@
+---
+const configuredCalendlyUrl = import.meta.env.PUBLIC_CALENDLY_URL?.trim();
+const calendlyUrl = configuredCalendlyUrl || 'https://calendly.com/anthonydnicasio/30min';
+const calendlyEmbedUrl = `${calendlyUrl}${calendlyUrl.includes('?') ? '&' : '?'}hide_event_type_details=1&hide_gdpr_banner=1`;
+---
+
+<section id="booking" class="bg-slate-50 py-20 md:py-24 scroll-mt-32 md:scroll-mt-28">
+  <div class="mx-auto max-w-7xl px-5 md:px-8">
+    <div class="mx-auto max-w-3xl text-center reveal mt-8">
+      <span class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-brand-50 text-brand-700 text-xs font-semibold tracking-wide uppercase ring-1 ring-brand-200">
+        Online scheduling
+      </span>
+      <h2 class="mt-4 text-3xl md:text-4xl font-extrabold tracking-tight text-slate-900">
+        Schedule Your Hybrid Battery Appointment
+      </h2>
+      <p class="mt-4 text-slate-600 text-lg leading-relaxed">
+        Choose a time that works for your visit. If you want pricing guidance first, start with
+        <a href="/#hero-form" class="font-semibold text-brand-700 hover:text-brand-600 transition-colors">Get Free Quote</a>
+        first.
+      </p>
+    </div>
+
+    <div class="mt-10 rounded-2xl overflow-hidden bg-white ring-1 ring-slate-200 shadow-xl reveal" style="transition-delay: 80ms;">
+      <iframe
+        src={calendlyEmbedUrl}
+        title="Schedule an appointment with Triton Hybrid on Calendly"
+        class="w-full h-[760px] md:h-[700px] border-0"
+        loading="lazy"
+      ></iframe>
+    </div>
+
+    <div class="mt-5 text-center reveal" style="transition-delay: 120ms;">
+      <p class="text-sm text-slate-500">
+        Prefer full-screen booking?
+        <a href={calendlyUrl} target="_blank" rel="noopener noreferrer" class="font-semibold text-brand-700 hover:text-brand-600 transition-colors">
+          Open Calendly in a new tab
+        </a>.
+      </p>
+      {!configuredCalendlyUrl && (
+        <p class="mt-2 text-xs text-slate-400">
+          Tip: set <code>PUBLIC_CALENDLY_URL</code> in your environment to use your live scheduling link.
+        </p>
+      )}
+    </div>
+  </div>
+</section>
